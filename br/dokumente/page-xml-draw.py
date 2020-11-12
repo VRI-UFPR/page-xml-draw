@@ -8,8 +8,9 @@ import cv2
 import webcolors as wc
 
 # Default values:
-default_color = (0, 0, 255) # Red
+default_color = None
 default_alpha = 0.3
+default_thickness = 3
 
 # https://stackoverflow.com/questions/12116685/how-can-i-require-my-python-scripts-argument-to-be-a-float-between-0-0-1-0-usin
 
@@ -24,21 +25,24 @@ def restricted_float(x):
 
   return x
 
-def rgb_to_bgr(color):
-  r, g, b = color
-  return b, g, r
-
 def css3_rgb(x):
   if x in wc.CSS3_NAMES_TO_HEX:
     x = wc.name_to_rgb(x, spec=wc.CSS3)
   else:
     x = wc.hex_to_rgb("#" + x)
 
-  return rgb_to_bgr(x)
+  r, g, b = x
+
+  return b, g, r
+
+def path(x):
+  return pathlib.Path(x)
 
 class Element:
-  def __init__(self, color, alpha):
-    self.color = color
+  def __init__(self, fill_color=default_color, outline_color=default_color, thickness=default_thickness, alpha=default_alpha):
+    self.fill_color = fill_color
+    self.outline_color = outline_color
+    self.thickness = thickness
     self.alpha = alpha
 
 class MyNamespace(argparse.Namespace):
@@ -53,7 +57,7 @@ class BorderAction(argparse.Action):
 
   def __call__(self, parser, namespace, values, option_string=None):
     # Store true and initialize values:
-    namespace.border = Element(default_color, default_alpha)
+    namespace.border = Element()
 
     # Save current element:
     namespace.cur_element = namespace.border
@@ -64,7 +68,7 @@ class TextRegionsAction(argparse.Action):
 
   def __call__(self, parser, namespace, values, option_string=None):
     # Store true and initialize values:
-    namespace.text_regions = Element(default_color, default_alpha)
+    namespace.text_regions = Element()
 
     # Save current element:
     namespace.cur_element = namespace.text_regions
@@ -75,15 +79,25 @@ class TextLinesAction(argparse.Action):
 
   def __call__(self, parser, namespace, values, option_string=None):
     # Store true and initialize values:
-    namespace.text_lines = Element(default_color, default_alpha)
+    namespace.text_lines = Element()
 
     # Save current element:
     namespace.cur_element = namespace.text_lines
 
-class ColorAction(argparse.Action):
+class FillColorAction(argparse.Action):
   def __call__(self, parser, namespace, values, option_string=None):
     # Set color of current element:
-    namespace.cur_element.color = values
+    namespace.cur_element.fill_color = values
+
+class OutlineColorAction(argparse.Action):
+  def __call__(self, parser, namespace, values, option_string=None):
+    # Set color of current element:
+    namespace.cur_element.outline_color = values
+
+class ThicknessAction(argparse.Action):
+  def __call__(self, parser, namespace, values, option_string=None):
+    # Set thickness of current element:
+    namespace.cur_element.thickness = values
 
 class AlphaAction(argparse.Action):
   def __call__(self, parser, namespace, values, option_string=None):
@@ -93,24 +107,17 @@ class AlphaAction(argparse.Action):
 def get_options():
   parser = argparse.ArgumentParser()
 
-  parser.add_argument("-i", "--input", dest="input", required=True, help="")
-  parser.add_argument("-o", "--output", dest="output", required=True, help="")
-  parser.add_argument("-d", "--base-dir", dest="base_dir", default=pathlib.Path.cwd(), help="")
-  parser.add_argument("-b", "--border", dest="border", default=None, action=BorderAction, help="")
-  parser.add_argument("-r", "--text-regions", dest="text_regions", default=None, action=TextRegionsAction, help="")
-  parser.add_argument("-l", "--text-lines", dest="text_lines", default=None, action=TextLinesAction, help="")
-  parser.add_argument("-c", "--color", type=css3_rgb, action=ColorAction, help="")
-  parser.add_argument("-a", "--alpha", type=restricted_float, action=AlphaAction, help="")
+  parser.add_argument("-i", "--input", type=path, dest="input", required=True, help="")
+  parser.add_argument("-o", "--output", type=path, dest="output", required=True, help="")
+  parser.add_argument("--base-dir", type=path, dest="base_dir", default=pathlib.Path.cwd(), help="")
+  parser.add_argument("--border", dest="border", default=None, action=BorderAction, help="")
+  parser.add_argument("--text-regions", dest="text_regions", default=None, action=TextRegionsAction, help="")
+  parser.add_argument("--text-lines", dest="text_lines", default=None, action=TextLinesAction, help="")
+  parser.add_argument("--fill-color", type=css3_rgb, action=FillColorAction, help="")
+  parser.add_argument("--outline-color", type=css3_rgb, action=OutlineColorAction, help="")
+  parser.add_argument("--thickness", type=int, action=ThicknessAction, help="")
 
   options = parser.parse_args(namespace=MyNamespace())
-
-  options.input = pathlib.Path(options.input)
-  options.output = pathlib.Path(options.output)
-
-  if options.base_dir:
-    options.base_dir = pathlib.Path(options.base_dir)
-  else:
-    options.base_dir = option.input.parent
 
   return options
 
@@ -154,11 +161,15 @@ def get_polygon(element):
 
   return np.array(polygon)
 
-def overlay_image(image, polygons, color, alpha):
+def overlay_image(image, polygons, fill_color, outline_color, thickness, alpha):
   overlay = image.copy()
 
-  #cv2.polylines(image, [border_points], True, (0, 0, 255), 3)
-  cv2.fillPoly(overlay, polygons, color)
+  if fill_color is not None:
+    cv2.fillPoly(overlay, polygons, fill_color)
+
+  if outline_color is not None:
+    cv2.polylines(overlay, polygons, True, outline_color, thickness)
+
   return cv2.addWeighted(overlay, alpha, image, 1 - alpha, 0)
 
 if __name__ == "__main__":
@@ -176,7 +187,7 @@ if __name__ == "__main__":
     border = get_border(page)
     polygon = get_polygon(border)
 
-    image = overlay_image(image, [polygon], options.border.color, options.border.alpha)
+    image = overlay_image(image, [polygon], options.border.fill_color, options.border.outline_color, options.border.thickness, options.border.alpha)
 
   regions = None
 
@@ -187,7 +198,7 @@ if __name__ == "__main__":
     for region in regions:
       polygons.append(get_polygon(region))
 
-    image = overlay_image(image, polygons, options.text_regions.color, options.text_regions.alpha)
+    image = overlay_image(image, polygons, options.text_regions.fill_color, options.text_regions.outline_color, options.text_regions.thickness, options.text_regions.alpha)
 
   if options.text_lines is not None:
     if regions is None:
@@ -200,6 +211,6 @@ if __name__ == "__main__":
       for line in lines:
         polygons.append(get_polygon(line))
 
-    image = overlay_image(image, polygons, options.text_lines.color, options.text_lines.alpha)
+    image = overlay_image(image, polygons, options.text_lines.fill_color, options.text_lines.outline_color, options.text_lines.thickness, options.text_lines.alpha)
 
   cv2.imwrite(str(options.output), image)
