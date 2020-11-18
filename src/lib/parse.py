@@ -4,7 +4,7 @@ import pathlib
 import webcolors as wc
 
 #Default values:
-default_color = None
+default_color = 0x0000FF
 default_alpha = 0.3
 default_thickness = 3
 

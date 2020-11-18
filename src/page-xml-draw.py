@@ -33,9 +33,9 @@ def get_polygon(element):
 class Page:
     def __init__(self, root):
         self.pagefile = get_element(root, "Page")
-        self.border = get_element(self.pagefile, "Border")
-        self.regions = get_elements(self.pagefile, "TextRegion")
-        self.lines = [get_elements(region, "TextLine") for region in self.regions]
+        self.border   = get_element(self.pagefile, "Border")
+        self.regions  = get_elements(self.pagefile, "TextRegion")
+        self.lines    = [get_elements(region, "TextLine") for region in self.regions]
 
 def overlay_image(image, polygons, fill_color, outline_color, thickness, alpha):
   overlay = image.copy()
@@ -64,31 +64,23 @@ if __name__ == "__main__":
   image_path = options.base_dir / page.pagefile.attrib['imageFilename']
   image = cv2.imread(str(image_path))
 
-  # border
-  if options.border is not None and page.border is not None:
+  overlay_border  = options.border is not None and page.border is not None
+  overlay_regions = options.text_regions is not None and page.regions is not None
+  overlay_lines   = options.text_lines is not None and page.lines is not None
 
-    polygon = get_polygon(Page.border)
+  if overlay_border:
+    polygon = get_polygon(page.border)
 
     image = overlay_image(image, [polygon], options.border.fill_color, options.border.outline_color, options.border.thickness, options.border.alpha)
 
-  # text regions
-  if options.text_regions is not None:
-
-    polygons = []
-    for region in page.regions:
-      polygons.append(get_polygon(region))
+  if overlay_regions:
+    polygons = [get_polygon(region) for region in page.regions]
 
     image = overlay_image(image, polygons, options.text_regions.fill_color, options.text_regions.outline_color, options.text_regions.thickness, options.text_regions.alpha)
 
-  # text lines
-  if options.text_lines is not None:
-
-    polygons = []
-
-    for line in page.lines:
-        polygons.append(get_polygon(line))
+  if overlay_lines:
+    polygons = [get_polygon(line) for line in page.lines]
 
     image = overlay_image(image, polygons, options.text_lines.fill_color, options.text_lines.outline_color, options.text_lines.thickness, options.text_lines.alpha)
 
-  # final image
   cv2.imwrite(str(options.output), image)
