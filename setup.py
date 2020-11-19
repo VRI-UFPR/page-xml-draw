@@ -18,8 +18,13 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     install_requires=install_requires,
     classifiers=[
-        "Programming Language :: Python :: 3",
+        "Environment :: Console",
+        "Intended Audience :: Science/Research",
         "License :: OSI Approved :: Apache Software License",
+        "Programming Language :: Python :: 3",
+        "Topic :: Scientific/Engineering :: Image Processing",
+        "Topic :: Scientific/Engineering :: Visualization",
+        "Topic :: Utilities",
     ],
     python_requires='>=3.6',
 )
