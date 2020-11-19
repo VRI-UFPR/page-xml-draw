@@ -1,4 +1,4 @@
-from lib.parse import *
+from src.lib.parse import *
 import numpy as np
 import cv2
 
@@ -48,8 +48,7 @@ def overlay_image(image, polygons, fill_color, outline_color, thickness, alpha):
 
   return cv2.addWeighted(overlay, alpha, image, 1 - alpha, 0)
 
-if __name__ == "__main__":
-
+def main():
   # returns parsed user selected parameters
   options = get_options()
 
@@ -84,3 +83,6 @@ if __name__ == "__main__":
     image = overlay_image(image, polygons, options.text_lines.fill_color, options.text_lines.outline_color, options.text_lines.thickness, options.text_lines.alpha)
 
   cv2.imwrite(str(options.output), image)
+
+if __name__ == "__main__":
+  main()

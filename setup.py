@@ -26,5 +26,10 @@ setuptools.setup(
         "Topic :: Scientific/Engineering :: Visualization",
         "Topic :: Utilities",
     ],
+    entry_points={
+      "console_scripts": [
+        "page-xml-draw=src:main",
+      ]
+    },
     python_requires='>=3.6',
 )
