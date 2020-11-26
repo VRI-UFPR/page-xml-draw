@@ -28,7 +28,7 @@ setuptools.setup(
     ],
     entry_points={
       "console_scripts": [
-        "page-xml-draw=src:main",
+        "page-xml-draw=page_xml_draw:main",
       ]
     },
     python_requires='>=3.6',
