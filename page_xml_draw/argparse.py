@@ -1,5 +1,6 @@
 import argparse
 import pathlib
+import json
 
 import page_xml_draw.graphics as graphics
 
@@ -230,6 +231,16 @@ class TransparencyAction(argparse.Action):
     # Set property 'Transparency' of most recent anottation:
     namespace.new_property('Transparency', values)
 
+class JSONAction(argparse.Action):
+  def __call__(self, parser, namespace, json_path, option_string=None):
+    with open(json_path, 'rt') as f:
+      json_file = json.load(f)
+
+    for parameter in json_file:
+      namespace.new_anottation(parameter)
+      for property in json_file[parameter]:
+        namespace.new_property(property, json_file[parameter][property])
+
 def get_options():
   parser = argparse.ArgumentParser()
 
@@ -256,6 +267,13 @@ def get_options():
     dest="base_dir",
     default=pathlib.Path.cwd(),
     help="Path to the base directory of the PAGE-XML file tree"
+  )
+
+  parser.add_argument(
+    "--json-file",
+    type=pathlib.Path,
+    action=JSONAction,
+    help="Path to the json parameter file"
   )
 
   parser.add_argument(
