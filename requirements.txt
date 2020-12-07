@@ -1,1 +1,3 @@
 webcolors
+numpy
+opencv-python

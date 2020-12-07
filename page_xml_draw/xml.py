@@ -1,4 +1,5 @@
 import xml.etree.ElementTree as ET
+import sys
 
 class Page:
   boundary_types = [
@@ -39,8 +40,9 @@ class Page:
     'Grapheme'
   ]
 
-  def __init__(self, path):
+  def __init__(self, path, anottations):
     self.file = ET.parse(path).getroot()
+    self.user_parameters = anottations.keys()
 
     self.parse_page()
     self.parse_boundaries()
@@ -49,6 +51,8 @@ class Page:
     self.parse_words()
     self.parse_glyphs()
     self.parse_graphemes()
+
+    self.check_missing_arguments()
 
   def get_child(self, name, root):
     for child in root:
@@ -161,3 +165,12 @@ class Page:
               self.graphemes[typ] += children
             else:
               self.graphemes[typ] = children
+
+  def check_missing_arguments(self):
+    element_types = self.get_elements()
+    for parameter in self.user_parameters:
+      try:
+        specified_element = element_types[parameter]
+      except KeyError:
+        sys.tracebacklimit = 0
+        raise RuntimeError(parameter + " not included in PAGE file.") from None

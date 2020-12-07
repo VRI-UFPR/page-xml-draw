@@ -7,7 +7,7 @@ def main():
   opt = get_options()
 
   # Fetch PAGE-XML file tree:
-  page = Page(opt.input)
+  page = Page(opt.input, opt.anottations)
 
   image_path = opt.base_dir / page.get_image_filename()
 
