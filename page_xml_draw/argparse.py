@@ -225,28 +225,36 @@ class EdgeThicknessAction(argparse.Action):
     # Set property 'EdgeThickness' of most recent anottation:
     namespace.new_property('EdgeThickness', values)
 
-class TransparencyAction(argparse.Action):
+class OpacityAction(argparse.Action):
   def __call__(self, parser, namespace, values, option_string=None):
-    # Set property 'Transparency' of most recent anottation:
-    namespace.new_property('Transparency', values)
+    # Set property 'Opacity' of most recent anottation:
+    namespace.new_property('Opacity', values)
 
 def get_options():
-  parser = argparse.ArgumentParser()
-
-  parser.add_argument(
-    "-i", "--input",
-    type=pathlib.Path,
-    dest="input",
-    required=True,
-    help="Path to the input PAGE-XML file"
+  # Formatting: https://stackoverflow.com/a/52606755
+  parser = argparse.ArgumentParser(
+    formatter_class=lambda prog: argparse.HelpFormatter(
+      prog,
+      max_help_position=52
+    )
   )
 
   parser.add_argument(
-    "-o", "--output",
+    "-i",
+    type=pathlib.Path,
+    dest="input",
+    required=True,
+    metavar=("/path/to/input.xml"),
+    help="path to the input PAGE-XML file"
+  )
+
+  parser.add_argument(
+    "-o",
     type=pathlib.Path,
     dest="output",
     required=True,
-    help="Path to the output image (PNG/JPEG) file"
+    metavar=("/path/to/output.{png,jpg}"),
+    help="path to the output image (PNG/JPEG) file"
     # TODO: Support other extensions like TIFF
   )
 
@@ -255,152 +263,153 @@ def get_options():
     type=pathlib.Path,
     dest="base_dir",
     default=pathlib.Path.cwd(),
-    help="Path to the base directory of the PAGE-XML file tree"
+    metavar=("/path/to/base/dir/"),
+    help="path to the base directory for the image paths in the PAGE-XML file"
   )
 
   parser.add_argument(
     "--background",
     action=BackgroundAction,
-    help="If this option is provided, the background of the page is drawn"
+    help="if this option is provided, the background of the page is drawn"
   )
 
   parser.add_argument(
     "--border",
     action=BorderAction,
-    help="If this option is provided, the Border anottation of the page is " \
+    help="if this option is provided, the Border anottation of the page is " \
          "drawn"
   )
 
   parser.add_argument(
     "--print-space",
     action=PrintSpaceAction,
-    help="If this option is provided, the PrintSpace anottation of the page " \
+    help="if this option is provided, the PrintSpace anottation of the page " \
          "is drawn"
   )
 
   parser.add_argument(
     "--text-regions",
     action=TextRegionsAction,
-    help="If this option is provided, the TextRegion anottations of the page " \
+    help="if this option is provided, the TextRegion anottations of the page " \
          "are drawn"
   )
 
   parser.add_argument(
     "--image-regions",
     action=ImageRegionsAction,
-    help="If this option is provided, the ImageRegion anottations of the " \
+    help="if this option is provided, the ImageRegion anottations of the " \
          "page are drawn"
   )
 
   parser.add_argument(
     "--line-drawing-regions",
     action=LineDrawingRegionsAction,
-    help="If this option is provided, the LineDrawingRegion anottations of " \
+    help="if this option is provided, the LineDrawingRegion anottations of " \
          "the page are drawn"
   )
 
   parser.add_argument(
     "--graphic-regions",
     action=GraphicRegionsAction,
-    help="If this option is provided, the GraphicRegion anottations of the " \
+    help="if this option is provided, the GraphicRegion anottations of the " \
          "page are drawn"
   )
 
   parser.add_argument(
     "--table-regions",
     action=TableRegionsAction,
-    help="If this option is provided, the TableRegion anottations of the " \
+    help="if this option is provided, the TableRegion anottations of the " \
          "page are drawn"
   )
 
   parser.add_argument(
     "--chart-regions",
     action=ChartRegionsAction,
-    help="If this option is provided, the ChartRegion anottations of the " \
+    help="if this option is provided, the ChartRegion anottations of the " \
          "page are drawn"
   )
 
   parser.add_argument(
     "--separator-regions",
     action=SeparatorRegionsAction,
-    help="If this option is provided, the SeparatorRegion anottations of the " \
+    help="if this option is provided, the SeparatorRegion anottations of the " \
          "page are drawn"
   )
 
   parser.add_argument(
     "--maths-regions",
     action=MathsRegionsAction,
-    help="If this option is provided, the MathsRegion anottations of the " \
+    help="if this option is provided, the MathsRegion anottations of the " \
          "page are drawn"
   )
 
   parser.add_argument(
     "--chem-regions",
     action=ChemRegionsAction,
-    help="If this option is provided, the ChemRegion anottations of the page " \
+    help="if this option is provided, the ChemRegion anottations of the page " \
          "are drawn"
   )
 
   parser.add_argument(
     "--music-regions",
     action=MusicRegionsAction,
-    help="If this option is provided, the MusicRegion anottations of the " \
+    help="if this option is provided, the MusicRegion anottations of the " \
          "page are drawn"
   )
 
   parser.add_argument(
     "--advert-regions",
     action=AdvertRegionsAction,
-    help="If this option is provided, the AdvertRegion anottations of the " \
+    help="if this option is provided, the AdvertRegion anottations of the " \
          "page are drawn"
   )
 
   parser.add_argument(
     "--noise-regions",
     action=NoiseRegionsAction,
-    help="If this option is provided, the NoiseRegion anottations of the " \
+    help="if this option is provided, the NoiseRegion anottations of the " \
          "page are drawn"
   )
 
   parser.add_argument(
     "--unknown-regions",
     action=UnknownRegionsAction,
-    help="If this option is provided, the UnknownRegion anottations of the " \
+    help="if this option is provided, the UnknownRegion anottations of the " \
          "page are drawn"
   )
 
   parser.add_argument(
     "--custom-regions",
     action=CustomRegionsAction,
-    help="If this option is provided, the CustomRegion anottations of the " \
+    help="if this option is provided, the CustomRegion anottations of the " \
          "page are drawn"
   )
 
   parser.add_argument(
     "--text-lines",
     action=TextLinesAction,
-    help="If this option is provided, the TextLine anottations of the page " \
+    help="if this option is provided, the TextLine anottations of the page " \
          "are drawn"
   )
 
   parser.add_argument(
     "--words",
     action=WordsAction,
-    help="If this option is provided, the Word anottations of the page are " \
+    help="if this option is provided, the Word anottations of the page are " \
          "drawn"
   )
 
   parser.add_argument(
     "--glyphs",
     action=GlyphsAction,
-    help="If this option is provided, the Glyph anottations of the page are " \
+    help="if this option is provided, the Glyph anottations of the page are " \
          "drawn"
   )
 
   parser.add_argument(
     "--graphemes",
     action=GraphemesAction,
-    help="If this option is provided, the Grapheme anottations of the page " \
+    help="if this option is provided, the Grapheme anottations of the page " \
          "are drawn"
   )
 
@@ -408,31 +417,33 @@ def get_options():
     "--fill-color",
     type=graphics.Color.normalize_color_string,
     action=FillColorAction,
-    help="CSS3 name or hex string of the color to fill the last defined " \
-         "PAGE-XML anottation"
+    metavar=("[COLOR]"),
+    help="CSS3 name or RGB hex string of the color to fill the polygons with"
   )
 
   parser.add_argument(
     "--edge-color",
     type=graphics.Color.normalize_color_string,
     action=EdgeColorAction,
-    help="CSS3 name or hex string of the color of the edges to be drawn " \
-         "around the last defined PAGE-XML anottation"
+    metavar=("[COLOR]"),
+    help="CSS3 name or RGB hex string of the color to draw the polygon edges " \
+         "with"
   )
 
   parser.add_argument(
     "--edge-thickness",
     type=int,
     action=EdgeThicknessAction,
-    help="Thickness of the edge to be drawn around the last defined PAGE-XML" \
-         "anottation"
+    metavar=("[1 .. inf]"),
+    help="thickness of the edges of the polygons to be drawn"
   )
 
   parser.add_argument(
-    "--transparency",
+    "--opacity",
     type=float,
-    action=TransparencyAction,
-    help="Transparency of the polygonal overlays to be drawn"
+    action=OpacityAction,
+    metavar=("[0.0 .. 1.0]"),
+    help="opacity of the polygons to be drawn"
   )
 
   options = parser.parse_args(namespace=Namespace())

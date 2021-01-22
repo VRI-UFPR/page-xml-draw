@@ -45,7 +45,7 @@ class Overlay:
       bg = anottations.pop('Background')
 
       bg_color = Color(bg['FillColor'])
-      bg_alpha = bg['Transparency']
+      bg_alpha = bg['Opacity']
     except KeyError:
       bg_color = Color('#000000')
       bg_alpha = 0.0
@@ -71,8 +71,8 @@ class Overlay:
         color = Color(properties['FillColor'])
         cv2.fillPoly(color_mask, polygons, color.to_bgr())
 
-        if 'Transparency' in properties:
-          alpha = properties['Transparency']
+        if 'Opacity' in properties:
+          alpha = properties['Opacity']
           cv2.fillPoly(weight_mask, polygons, alpha)
 
       if 'EdgeColor' in properties and 'EdgeThickness' in properties:
@@ -80,8 +80,8 @@ class Overlay:
         thickness = properties['EdgeThickness']
         cv2.polylines(color_mask, polygons, True, color.to_bgr(), thickness)
 
-        if 'Transparency' in properties:
-          alpha = properties['Transparency']
+        if 'Opacity' in properties:
+          alpha = properties['Opacity']
           cv2.polylines(weight_mask, polygons, True, alpha, thickness)
 
     self.overlay = color_mask * weight_mask + self.image * (1.0 - weight_mask)
