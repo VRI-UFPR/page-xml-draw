@@ -83,38 +83,5 @@ optional arguments:
 Examples
 --------
 
-Source of image: [GBN Dataset](https://web.inf.ufpr.br/vri/databases/gbn/)
-
-PAGE-XML file generated through: [ocrd-gbn](https://github.com/GBN-DBP/ocrd-gbn) + [ocrd-export-larex](https://github.com/bertsky/workflow-configuration/blob/master/ocrd-export-larex) 
-
-```
-$ page-xml-draw \
-  -i OCR-D-IMG_DerGemeindebote-p08.xml \
-  -o OCR-D-IMG_DerGemeindebote-p08-contrast.png \
-  --text-regions \
-    --fill-color cyan \
-    --edge-color darkblue \
-    --edge-thickness 5 \
-    --opacity 0.3 \
-  --text-lines \
-    --fill-color crimson \
-    --edge-color darkred \
-    --edge-thickness 3 \
-    --opacity 0.3
-```
-
-![Contrast](assets/examples/OCR-D-IMG_DerGemeindebote-p08-contrast.png)
-
-```
-$ page-xml-draw \
-  -i OCR-D-IMG_DerGemeindebote-p08.xml \
-  -o OCR-D-IMG_DerGemeindebote-p08-binary.png \
-  --background \
-    --fill-color black \
-    --opacity 1.0 \
-  --text-lines \
-    --fill-color white \
-    --opacity 1.0
-```
-
-![Binary](assets/examples/OCR-D-IMG_DerGemeindebote-p08-binary.png)
+- [Semi-transparent contrasting example](examples/contrast/README.md)
+- [Opaque binary (black-and-white) example](examples/binary/README.md)

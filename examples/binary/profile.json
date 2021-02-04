@@ -1,0 +1,12 @@
+{
+    "PAGE-XML/Page": {
+        "Drawing/FillColor": "black",
+        "Drawing/Opacity": 1.0,
+        "PAGE-XML/TextRegion": {
+            "PAGE-XML/TextLine": {
+                "Drawing/FillColor": "white",
+                "Drawing/Opacity": 1.0
+            }
+        }
+    }
+}

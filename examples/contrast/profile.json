@@ -1,0 +1,16 @@
+{
+    "PAGE-XML/Page": {
+        "PAGE-XML/TextRegion": {
+            "Drawing/FillColor": "cyan",
+            "Drawing/EdgeColor": "darkblue",
+            "Drawing/EdgeThickness": 5,
+            "Drawing/Opacity": 0.3,
+            "PAGE-XML/TextLine": {
+                "Drawing/FillColor": "crimson",
+                "Drawing/EdgeColor": "darkred",
+                "Drawing/EdgeThickness": 3,
+                "Drawing/Opacity": 0.3
+            }
+        }
+    }
+}
