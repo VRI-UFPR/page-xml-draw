@@ -2,6 +2,7 @@ import os
 import pkg_resources
 import argparse
 import pathlib
+import json
 
 from page_xml_draw.schema import Schema
 
@@ -136,12 +137,20 @@ def get_opts():
     )
 
     parser.add_argument(
-        "--base-dir",
+        "-b", "--base-dir",
         type=pathlib.Path,
         dest="base_dir",
         default=pathlib.Path.cwd(),
         metavar=("<path/to/dir>"),
         help="path to base directory relative to PAGE-XML file content"
+    )
+
+    parser.add_argument(
+        "-p", "--profile",
+        type=pathlib.Path,
+        dest="profile",
+        metavar=("<path/to/file>.json"),
+        help="path to pre-defined json profile describing what has to be done"
     )
 
     parser.add_argument(
@@ -364,7 +373,13 @@ def get_opts():
             "Base directory '%s' is not readable" % base_dir_abs
         )
 
-    # Validate json instance against schema:
-    schema.validate(options.instance)
+    if options.profile:
+        with open(str(options.profile), 'r') as fp:
+            instance = json.loads(fp.read())
+    else:
+        instance = options.instance
 
-    return str(input_abs), str(output_abs), str(base_dir_abs), options.instance
+    # Validate json instance against schema:
+    schema.validate(instance)
+
+    return str(input_abs), str(output_abs), str(base_dir_abs), instance
