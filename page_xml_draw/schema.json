@@ -1,0 +1,499 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://github.com/GBN-DBP/page-xml-draw/schema.json",
+    "title": "page-xml-draw schema",
+    "description": "Schema for input and inner data structure formats for page-xml-draw",
+    "Drawing": {
+        "HexColor" : {
+            "description": "RGB hex string",
+            "type": "string",
+            "pattern": "^#[a-fA-F0-9]{6}$"
+        },
+        "WebColor": {
+            "description": "CSS3 color name",
+            "type": "string",
+            "enum": [
+                "aliceblue",
+                "antiquewhite",
+                "aqua",
+                "aquamarine",
+                "azure",
+                "beige",
+                "bisque",
+                "black",
+                "blanchedalmond",
+                "blue",
+                "blueviolet",
+                "brown",
+                "burlywood",
+                "cadetblue",
+                "chartreuse",
+                "chocolate",
+                "coral",
+                "cornflowerblue",
+                "cornsilk",
+                "crimson",
+                "cyan",
+                "darkblue",
+                "darkcyan",
+                "darkgoldenrod",
+                "darkgray",
+                "darkgreen",
+                "darkgrey",
+                "darkkhaki",
+                "darkmagenta",
+                "darkolivegreen",
+                "darkorange",
+                "darkorchid",
+                "darkred",
+                "darksalmon",
+                "darkseagreen",
+                "darkslateblue",
+                "darkslategray",
+                "darkslategrey",
+                "darkturquoise",
+                "darkviolet",
+                "deeppink",
+                "deepskyblue",
+                "dimgray",
+                "dimgrey",
+                "dodgerblue",
+                "firebrick",
+                "floralwhite",
+                "forestgreen",
+                "fuchsia",
+                "gainsboro",
+                "ghostwhite",
+                "goldenrod",
+                "gold",
+                "gray",
+                "green",
+                "greenyellow",
+                "grey",
+                "honeydew",
+                "hotpink",
+                "indianred",
+                "indigo",
+                "ivory",
+                "khaki",
+                "lavenderblush",
+                "lavender",
+                "lawngreen",
+                "lemonchiffon",
+                "lightblue",
+                "lightcoral",
+                "lightcyan",
+                "lightgoldenrodyellow",
+                "lightgray",
+                "lightgreen",
+                "lightgrey",
+                "lightpink",
+                "lightsalmon",
+                "lightseagreen",
+                "lightskyblue",
+                "lightslategray",
+                "lightslategrey",
+                "lightsteelblue",
+                "lightyellow",
+                "lime",
+                "limegreen",
+                "linen",
+                "magenta",
+                "maroon",
+                "mediumaquamarine",
+                "mediumblue",
+                "mediumorchid",
+                "mediumpurple",
+                "mediumseagreen",
+                "mediumslateblue",
+                "mediumspringgreen",
+                "mediumturquoise",
+                "mediumvioletred",
+                "midnightblue",
+                "mintcream",
+                "mistyrose",
+                "moccasin",
+                "navajowhite",
+                "navy",
+                "oldlace",
+                "olive",
+                "olivedrab",
+                "orange",
+                "orangered",
+                "orchid",
+                "palegoldenrod",
+                "palegreen",
+                "paleturquoise",
+                "palevioletred",
+                "papayawhip",
+                "peachpuff",
+                "peru",
+                "pink",
+                "plum",
+                "powderblue",
+                "purple",
+                "rebeccapurple",
+                "red",
+                "rosybrown",
+                "royalblue",
+                "saddlebrown",
+                "salmon",
+                "sandybrown",
+                "seagreen",
+                "seashell",
+                "sienna",
+                "silver",
+                "skyblue",
+                "slateblue",
+                "slategray",
+                "slategrey",
+                "snow",
+                "springgreen",
+                "steelblue",
+                "tan",
+                "teal",
+                "thistle",
+                "tomato",
+                "turquoise",
+                "violet",
+                "wheat",
+                "white",
+                "whitesmoke",
+                "yellow",
+                "yellowgreen"
+            ]
+        },
+        "FillColor": {
+            "description": "Color to fill the polygons with",
+            "oneOf": [
+                {
+                    "$ref": "#/Drawing/HexColor"
+                },
+                {
+                    "$ref": "#/Drawing/WebColor"
+                }
+            ]
+        },
+        "EdgeColor": {
+            "description": "Color to draw the polygon edges with",
+            "oneOf": [
+                {
+                    "$ref": "#/Drawing/HexColor"
+                },
+                {
+                    "$ref": "#/Drawing/WebColor"
+                }
+            ]
+        },
+        "EdgeThickness": {
+            "description": "Thickness of the edges of the polygons to be drawn",
+            "type": "integer",
+            "minimum": 0
+        },
+        "Opacity": {
+            "description": "Opacity of the polygons to be drawn",
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+        }
+    },
+    "PAGE-XML": {
+        "Border": {
+            "description": "Border PAGE-XML annotation",
+            "type": "object",
+            "properties": {
+                "Drawing/FillColor": {
+                    "$ref": "#/Drawing/FillColor"
+                },
+                "Drawing/EdgeColor": {
+                    "$ref": "#/Drawing/EdgeColor"
+                },
+                "Drawing/EdgeThickness": {
+                    "$ref": "#/Drawing/EdgeThickness"
+                },
+                "Drawing/Opacity": {
+                    "$ref": "#/Drawing/EdgeThickness"
+                }
+            },
+            "additionalProperties": false
+        },
+        "PrintSpace": {
+            "description": "PrintSpace PAGE-XML annotation",
+            "type": "object",
+            "properties": {
+                "Drawing/FillColor": {
+                    "$ref": "#/Drawing/FillColor"
+                },
+                "Drawing/EdgeColor": {
+                    "$ref": "#/Drawing/EdgeColor"
+                },
+                "Drawing/EdgeThickness": {
+                    "$ref": "#/Drawing/EdgeThickness"
+                },
+                "Drawing/Opacity": {
+                    "$ref": "#/Drawing/EdgeThickness"
+                }
+            },
+            "additionalProperties": false
+        },
+        "Grapheme": {
+            "description": "Grapheme PAGE-XML annotation",
+            "type": "object",
+            "properties": {
+                "Drawing/FillColor": {
+                    "$ref": "#/Drawing/FillColor"
+                },
+                "Drawing/EdgeColor": {
+                    "$ref": "#/Drawing/EdgeColor"
+                },
+                "Drawing/EdgeThickness": {
+                    "$ref": "#/Drawing/EdgeThickness"
+                },
+                "Drawing/Opacity": {
+                    "$ref": "#/Drawing/EdgeThickness"
+                }
+            },
+            "additionalProperties": false
+        },
+        "Graphemes": {
+            "description": "Graphemes PAGE-XML annotation",
+            "type": "object",
+            "properties": {
+                "PAGE-XML/Grapheme": {
+                    "$ref": "#/PAGE-XML/Grapheme"
+                },
+                "Drawing/FillColor": {
+                    "$ref": "#/Drawing/FillColor"
+                },
+                "Drawing/EdgeColor": {
+                    "$ref": "#/Drawing/EdgeColor"
+                },
+                "Drawing/EdgeThickness": {
+                    "$ref": "#/Drawing/EdgeThickness"
+                },
+                "Drawing/Opacity": {
+                    "$ref": "#/Drawing/EdgeThickness"
+                }
+            },
+            "additionalProperties": false
+        },
+        "Glyph": {
+            "description": "Glyph PAGE-XML annotation",
+            "type": "object",
+            "properties": {
+                "PAGE-XML/Graphemes": {
+                    "$ref": "#/PAGE-XML/Graphemes"
+                },
+                "Drawing/FillColor": {
+                    "$ref": "#/Drawing/FillColor"
+                },
+                "Drawing/EdgeColor": {
+                    "$ref": "#/Drawing/EdgeColor"
+                },
+                "Drawing/EdgeThickness": {
+                    "$ref": "#/Drawing/EdgeThickness"
+                },
+                "Drawing/Opacity": {
+                    "$ref": "#/Drawing/EdgeThickness"
+                }
+            },
+            "additionalProperties": false
+        },
+        "Word": {
+            "description": "Word PAGE-XML annotation",
+            "type": "object",
+            "properties": {
+                "PAGE-XML/Glyph": {
+                    "$ref": "#/PAGE-XML/Glyph"
+                },
+                "Drawing/FillColor": {
+                    "$ref": "#/Drawing/FillColor"
+                },
+                "Drawing/EdgeColor": {
+                    "$ref": "#/Drawing/EdgeColor"
+                },
+                "Drawing/EdgeThickness": {
+                    "$ref": "#/Drawing/EdgeThickness"
+                },
+                "Drawing/Opacity": {
+                    "$ref": "#/Drawing/EdgeThickness"
+                }
+            },
+            "additionalProperties": false
+        },
+        "TextLine": {
+            "description": "TextLine PAGE-XML annotation",
+            "type": "object",
+            "properties": {
+                "PAGE-XML/Word": {
+                    "$ref": "#/PAGE-XML/Word"
+                },
+                "Drawing/FillColor": {
+                    "$ref": "#/Drawing/FillColor"
+                },
+                "Drawing/EdgeColor": {
+                    "$ref": "#/Drawing/EdgeColor"
+                },
+                "Drawing/EdgeThickness": {
+                    "$ref": "#/Drawing/EdgeThickness"
+                },
+                "Drawing/Opacity": {
+                    "$ref": "#/Drawing/EdgeThickness"
+                }
+            },
+            "additionalProperties": false
+        },
+        "Region": {
+            "description": "Base Region PAGE-XML annotation (RegionType)",
+            "type": "object",
+            "properties": {
+                "PAGE-XML/TextLine": {
+                    "$ref": "#/PAGE-XML/TextLine"
+                },
+                "Drawing/FillColor": {
+                    "$ref": "#/Drawing/FillColor"
+                },
+                "Drawing/EdgeColor": {
+                    "$ref": "#/Drawing/EdgeColor"
+                },
+                "Drawing/EdgeThickness": {
+                    "$ref": "#/Drawing/EdgeThickness"
+                },
+                "Drawing/Opacity": {
+                    "$ref": "#/Drawing/EdgeThickness"
+                }
+            },
+            "additionalProperties": false
+        },
+        "TextRegion": {
+            "description": "TextRegion PAGE-XML annotation",
+            "$ref": "#/PAGE-XML/Region"
+        },
+        "ImageRegion": {
+            "description": "ImageRegion PAGE-XML annotation",
+            "$ref": "#/PAGE-XML/Region"
+        },
+        "LineDrawingRegion": {
+            "description": "LineDrawingingRegion PAGE-XML annotation",
+            "$ref": "#/PAGE-XML/Region"
+        },
+        "GraphicRegion": {
+            "description": "GraphicRegion PAGE-XML annotation",
+            "$ref": "#/PAGE-XML/Region"
+        },
+        "TableRegion": {
+            "description": "TableRegion PAGE-XML annotation",
+            "$ref": "#/PAGE-XML/Region"
+        },
+        "ChartRegion": {
+            "description": "ChartRegion PAGE-XML annotation",
+            "$ref": "#/PAGE-XML/Region"
+        },
+        "SeparatorRegion": {
+            "description": "SeparatorRegion PAGE-XML annotation",
+            "$ref": "#/PAGE-XML/Region"
+        },
+        "MathsRegion": {
+            "description": "MathsRegion PAGE-XML annotation",
+            "$ref": "#/PAGE-XML/Region"
+        },
+        "ChemRegion": {
+            "description": "ChemRegion PAGE-XML annotation",
+            "$ref": "#/PAGE-XML/Region"
+        },
+        "MusicRegion": {
+            "description": "MusicRegion PAGE-XML annotation",
+            "$ref": "#/PAGE-XML/Region"
+        },
+        "AdvertRegion": {
+            "description": "AdvertRegion PAGE-XML annotation",
+            "$ref": "#/PAGE-XML/Region"
+        },
+        "NoiseRegion": {
+            "description": "NoiseRegion PAGE-XML annotation",
+            "$ref": "#/PAGE-XML/Region"
+        },
+        "UnknownRegion": {
+            "description": "UnknownRegion PAGE-XML annotation",
+            "$ref": "#/PAGE-XML/Region"
+        },
+        "CustomRegion": {
+            "description": "CustomRegion PAGE-XML annotation",
+            "$ref": "#/PAGE-XML/Region"
+        },
+        "Page": {
+            "description": "Page PAGE-XML annotation",
+            "type": "object",
+            "properties": {
+                "PAGE-XML/Border": {
+                    "$ref": "#/PAGE-XML/Border"
+                },
+                "PAGE-XML/PrintSpace": {
+                    "$ref": "#/PAGE-XML/PrintSpace"
+                },
+                "PAGE-XML/TextRegion": {
+                    "$ref": "#/PAGE-XML/TextRegion"
+                },
+                "PAGE-XML/ImageRegion": {
+                    "$ref": "#/PAGE-XML/ImageRegion"
+                },
+                "PAGE-XML/LineDrawingingRegion": {
+                    "$ref": "#/PAGE-XML/LineDrawingingRegion"
+                },
+                "PAGE-XML/GraphicRegion": {
+                    "$ref": "#/PAGE-XML/GraphicRegion"
+                },
+                "PAGE-XML/TableRegion": {
+                    "$ref": "#/PAGE-XML/TableRegion"
+                },
+                "PAGE-XML/ChartRegion": {
+                    "$ref": "#/PAGE-XML/ChartRegion"
+                },
+                "PAGE-XML/SeparatorRegion": {
+                    "$ref": "#/PAGE-XML/SeparatorRegion"
+                },
+                "PAGE-XML/MathsRegion": {
+                    "$ref": "#/PAGE-XML/MathsRegion"
+                },
+                "PAGE-XML/ChemRegion": {
+                    "$ref": "#/PAGE-XML/ChemRegion"
+                },
+                "PAGE-XML/MusicRegion": {
+                    "$ref": "#/PAGE-XML/MusicRegion"
+                },
+                "PAGE-XML/AdvertRegion": {
+                    "$ref": "#/PAGE-XML/AdvertRegion"
+                },
+                "PAGE-XML/NoiseRegion": {
+                    "$ref": "#/PAGE-XML/NoiseRegion"
+                },
+                "PAGE-XML/UnkownRegion": {
+                    "$ref": "#/PAGE-XML/UnknownRegion"
+                },
+                "PAGE-XML/CustomRegion": {
+                    "$ref": "#/PAGE-XML/CustomRegion"
+                },
+                "Drawing/FillColor": {
+                    "$ref": "#/Drawing/FillColor"
+                },
+                "Drawing/EdgeColor": {
+                    "$ref": "#/Drawing/EdgeColor"
+                },
+                "Drawing/EdgeThickness": {
+                    "$ref": "#/Drawing/EdgeThickness"
+                },
+                "Drawing/Opacity": {
+                    "$ref": "#/Drawing/EdgeThickness"
+                }
+            },
+            "additionalProperties": false
+        }
+    },
+    "type": "object",
+    "properties": {
+        "PAGE-XML/Page": {
+            "$ref": "#/PAGE-XML/Page"
+        }
+    },
+    "additionalProperties": false
+}
