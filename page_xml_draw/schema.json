@@ -389,6 +389,10 @@
             "description": "ChartRegion PAGE-XML annotation",
             "$ref": "#/PAGE-XML/Region"
         },
+        "MapRegion": {
+            "description": "MapRegion PAGE-XML annotation",
+            "$ref": "#/PAGE-XML/Region"
+        },
         "SeparatorRegion": {
             "description": "SeparatorRegion PAGE-XML annotation",
             "$ref": "#/PAGE-XML/Region"
@@ -448,6 +452,9 @@
                 },
                 "PAGE-XML/ChartRegion": {
                     "$ref": "#/PAGE-XML/ChartRegion"
+                },
+                "PAGE-XML/MapRegion": {
+                    "$ref": "#/PAGE-XML/MapRegion"
                 },
                 "PAGE-XML/SeparatorRegion": {
                     "$ref": "#/PAGE-XML/SeparatorRegion"

@@ -208,6 +208,12 @@ def get_opts():
     )
 
     parser.add_argument(
+        "--map-region",
+        action=PageXmlAction,
+        help="visit the 'MapRegion' PAGE-XML annotations"
+    )
+
+    parser.add_argument(
         "--separator-region",
         action=PageXmlAction,
         help="visit the 'SeparatorRegion' PAGE-XML annotations"
