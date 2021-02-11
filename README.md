@@ -42,42 +42,47 @@ Help Manual
 -----------
 
 ```
-usage: page-xml-draw [-h] -i /path/to/input.xml -o /path/to/output.{png,jpg} [--base-dir /path/to/base/dir/] [--background] [--border]
-                     [--print-space] [--text-regions] [--image-regions] [--line-drawing-regions] [--graphic-regions] [--table-regions]
-                     [--chart-regions] [--separator-regions] [--maths-regions] [--chem-regions] [--music-regions] [--advert-regions]
-                     [--noise-regions] [--unknown-regions] [--custom-regions] [--text-lines] [--words] [--glyphs] [--graphemes]
-                     [--fill-color [COLOR]] [--edge-color [COLOR]] [--edge-thickness [1 .. inf]] [--opacity [0.0 .. 1.0]]
+usage: page-xml-draw [-h] -i <path/to/file>.xml -o <path/to/file>.{png,jpg} [-b <path/to/dir>] [-p <path/to/file>.json]
+                     [--page] [--border] [--print-space] [--text-region] [--image-region] [--line-drawing-region]
+                     [--graphic-region] [--table-region] [--chart-region] [--map-region] [--separator-region]
+                     [--maths-region] [--chem-region] [--music-region] [--advert-region] [--noise-region]
+                     [--unknown-region] [--custom-region] [--text-line] [--word] [--glyph] [--graphemes] [--grapheme]
+                     [--fill-color (<hex> | <name>)] [--edge-color (<hex> | <name>)] [--edge-thickness [0 .. +inf]]
+                     [--opacity [0.0 - 1.0]]
 
 optional arguments:
-  -h, --help                     show this help message and exit
-  -i /path/to/input.xml          path to the input PAGE-XML file
-  -o /path/to/output.{png,jpg}   path to the output image (PNG/JPEG) file
-  --base-dir /path/to/base/dir/  path to the base directory for the image paths in the PAGE-XML file
-  --background                   if this option is provided, the background of the page is drawn
-  --border                       if this option is provided, the Border anottation of the page is drawn
-  --print-space                  if this option is provided, the PrintSpace anottation of the page is drawn
-  --text-regions                 if this option is provided, the TextRegion anottations of the page are drawn
-  --image-regions                if this option is provided, the ImageRegion anottations of the page are drawn
-  --line-drawing-regions         if this option is provided, the LineDrawingRegion anottations of the page are drawn
-  --graphic-regions              if this option is provided, the GraphicRegion anottations of the page are drawn
-  --table-regions                if this option is provided, the TableRegion anottations of the page are drawn
-  --chart-regions                if this option is provided, the ChartRegion anottations of the page are drawn
-  --separator-regions            if this option is provided, the SeparatorRegion anottations of the page are drawn
-  --maths-regions                if this option is provided, the MathsRegion anottations of the page are drawn
-  --chem-regions                 if this option is provided, the ChemRegion anottations of the page are drawn
-  --music-regions                if this option is provided, the MusicRegion anottations of the page are drawn
-  --advert-regions               if this option is provided, the AdvertRegion anottations of the page are drawn
-  --noise-regions                if this option is provided, the NoiseRegion anottations of the page are drawn
-  --unknown-regions              if this option is provided, the UnknownRegion anottations of the page are drawn
-  --custom-regions               if this option is provided, the CustomRegion anottations of the page are drawn
-  --text-lines                   if this option is provided, the TextLine anottations of the page are drawn
-  --words                        if this option is provided, the Word anottations of the page are drawn
-  --glyphs                       if this option is provided, the Glyph anottations of the page are drawn
-  --graphemes                    if this option is provided, the Grapheme anottations of the page are drawn
-  --fill-color [COLOR]           CSS3 name or RGB hex string of the color to fill the polygons with
-  --edge-color [COLOR]           CSS3 name or RGB hex string of the color to draw the polygon edges with
-  --edge-thickness [1 .. inf]    thickness of the edges of the polygons to be drawn
-  --opacity [0.0 .. 1.0]         opacity of the polygons to be drawn
+  -h, --help                             show this help message and exit
+  -i, --input <path/to/file>.xml         path to input PAGE-XML file
+  -o, --output <path/to/file>.{png,jpg}  path to output image file
+  -b, --base-dir <path/to/dir>           path to base directory relative to PAGE-XML file content
+  -p, --profile <path/to/file>.json      path to pre-defined json profile describing what has to be done
+  --page                                 visit the 'Page' PAGE-XML annotations
+  --border                               visit the 'Border' PAGE-XML annotations
+  --print-space                          visit the 'PrintSpace' PAGE-XML annotations
+  --text-region                          visit the 'TextRegion' PAGE-XML annotations
+  --image-region                         visit the 'ImageRegion' PAGE-XML annotations
+  --line-drawing-region                  visit the 'LineDrawingRegion' PAGE-XML annotations
+  --graphic-region                       visit the 'GraphicRegion' PAGE-XML annotations
+  --table-region                         visit the 'TableRegion' PAGE-XML annotations
+  --chart-region                         visit the 'ChartRegion' PAGE-XML annotations
+  --map-region                           visit the 'MapRegion' PAGE-XML annotations
+  --separator-region                     visit the 'SeparatorRegion' PAGE-XML annotations
+  --maths-region                         visit the 'MathsRegion' PAGE-XML annotations
+  --chem-region                          visit the 'ChemRegion' PAGE-XML annotations
+  --music-region                         visit the 'MusicRegion' PAGE-XML annotations
+  --advert-region                        visit the 'AdvertRegion' PAGE-XML annotations
+  --noise-region                         visit the 'NoiseRegion' PAGE-XML annotations
+  --unknown-region                       visit the 'UnknownRegion' PAGE-XML annotations
+  --custom-region                        visit the 'CustomRegion' PAGE-XML annotations
+  --text-line                            visit the 'TextLine' PAGE-XML annotations
+  --word                                 visit the 'Word' PAGE-XML annotations
+  --glyph                                visit the 'Glyph' PAGE-XML annotations
+  --graphemes                            visit the 'Graphemes' PAGE-XML annotations
+  --grapheme                             visit the 'Grapheme' PAGE-XML annotations
+  --fill-color (<hex> | <name>)          fill annotation polygons with specified color
+  --edge-color (<hex> | <name>)          draw annotation polygon edges with specified color
+  --edge-thickness [0 .. +inf]           draw annotation polygon edges with specified thickness
+  --opacity [0.0 - 1.0]                  draw annotation polygons with specified opacity
 ```
 
 Examples
