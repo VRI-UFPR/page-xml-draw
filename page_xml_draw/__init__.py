@@ -1,1 +1,1 @@
-from page_xml_draw.main import *
+from page_xml_draw.main import main
