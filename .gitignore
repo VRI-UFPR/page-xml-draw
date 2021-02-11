@@ -1,1 +1,3 @@
 __pycache__
+page_xml_draw.egg-info/*
+.vscode
