@@ -212,7 +212,7 @@
                     "$ref": "#/Drawing/EdgeThickness"
                 },
                 "Drawing/Opacity": {
-                    "$ref": "#/Drawing/EdgeThickness"
+                    "$ref": "#/Drawing/Opacity"
                 }
             },
             "additionalProperties": false
@@ -231,7 +231,7 @@
                     "$ref": "#/Drawing/EdgeThickness"
                 },
                 "Drawing/Opacity": {
-                    "$ref": "#/Drawing/EdgeThickness"
+                    "$ref": "#/Drawing/Opacity"
                 }
             },
             "additionalProperties": false
@@ -250,7 +250,7 @@
                     "$ref": "#/Drawing/EdgeThickness"
                 },
                 "Drawing/Opacity": {
-                    "$ref": "#/Drawing/EdgeThickness"
+                    "$ref": "#/Drawing/Opacity"
                 }
             },
             "additionalProperties": false
@@ -272,7 +272,7 @@
                     "$ref": "#/Drawing/EdgeThickness"
                 },
                 "Drawing/Opacity": {
-                    "$ref": "#/Drawing/EdgeThickness"
+                    "$ref": "#/Drawing/Opacity"
                 }
             },
             "additionalProperties": false
@@ -294,7 +294,7 @@
                     "$ref": "#/Drawing/EdgeThickness"
                 },
                 "Drawing/Opacity": {
-                    "$ref": "#/Drawing/EdgeThickness"
+                    "$ref": "#/Drawing/Opacity"
                 }
             },
             "additionalProperties": false
@@ -316,7 +316,7 @@
                     "$ref": "#/Drawing/EdgeThickness"
                 },
                 "Drawing/Opacity": {
-                    "$ref": "#/Drawing/EdgeThickness"
+                    "$ref": "#/Drawing/Opacity"
                 }
             },
             "additionalProperties": false
@@ -338,7 +338,7 @@
                     "$ref": "#/Drawing/EdgeThickness"
                 },
                 "Drawing/Opacity": {
-                    "$ref": "#/Drawing/EdgeThickness"
+                    "$ref": "#/Drawing/Opacity"
                 }
             },
             "additionalProperties": false
@@ -360,7 +360,7 @@
                     "$ref": "#/Drawing/EdgeThickness"
                 },
                 "Drawing/Opacity": {
-                    "$ref": "#/Drawing/EdgeThickness"
+                    "$ref": "#/Drawing/Opacity"
                 }
             },
             "additionalProperties": false
@@ -442,7 +442,7 @@
                     "$ref": "#/PAGE-XML/ImageRegion"
                 },
                 "PAGE-XML/LineDrawingingRegion": {
-                    "$ref": "#/PAGE-XML/LineDrawingingRegion"
+                    "$ref": "#/PAGE-XML/LineDrawingRegion"
                 },
                 "PAGE-XML/GraphicRegion": {
                     "$ref": "#/PAGE-XML/GraphicRegion"
@@ -490,7 +490,7 @@
                     "$ref": "#/Drawing/EdgeThickness"
                 },
                 "Drawing/Opacity": {
-                    "$ref": "#/Drawing/EdgeThickness"
+                    "$ref": "#/Drawing/Opacity"
                 }
             },
             "additionalProperties": false
