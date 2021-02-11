@@ -4,7 +4,7 @@ import argparse
 import pathlib
 import json
 
-from page_xml_draw.schema import Schema
+from page_xml_draw.json.schema import Schema
 
 
 def kebab2camel(string):
@@ -388,4 +388,4 @@ def get_opts():
     # Validate json instance against schema:
     schema.validate(instance)
 
-    return str(input_abs), str(output_abs), str(base_dir_abs), instance
+    return input_abs, output_abs, base_dir_abs, instance
