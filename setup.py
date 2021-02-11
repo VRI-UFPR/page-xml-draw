@@ -1,20 +1,21 @@
 import setuptools
 
-with open("requirements.txt") as fp:
+with open("requirements.txt", 'r') as fp:
     install_requires = fp.read()
 
-with open("README.md", "r") as f:
-    long_description = f.read()
+with open("README.md", 'r') as fp:
+    long_description = fp.read()
 
 setuptools.setup(
     name="page-xml-draw",
     version="0.0.1",
     author="Lucas Sulzbach, João Okimoto",
     author_email="lucas@sulzbach.org",
-    description="A CLI application that enables quick PAGE.XML files visualization",
+    description="A powerful CLI tool for visualization and encoding of "
+                "PAGE-XML files",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/dokumente-br/page_xml_draw",
+    url="https://github.com/GBN-DBP/page_xml_draw",
     packages=setuptools.find_packages(),
     install_requires=install_requires,
     classifiers=[
