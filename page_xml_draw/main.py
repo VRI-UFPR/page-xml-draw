@@ -1,19 +1,23 @@
-from page_xml_draw.argparse import get_options
-from page_xml_draw.xml import Page
-from page_xml_draw.graphics import Overlay
+import cv2
+
+from page_xml_draw.cli import get_opts
+from page_xml_draw.gends.page import parse
+from page_xml_draw.drawer import Drawer
+from page_xml_draw.json.instance import Instance
+
 
 def main():
-  # Return parsed user selected parameters:
-  opt = get_options()
+    # Get options from CLI:
+    in_file, out_file, base_dir, instance = get_opts()
 
-  # Fetch PAGE-XML file tree:
-  page = Page(opt.input)
+    # Parse PAGE-XML file and pass it to drawer:
+    drawer = Drawer(parse(str(in_file), silence=True), base_dir)
 
-  image_path = opt.base_dir / page.get_image_filename()
+    # Wrap JSON instance representing the profile:
+    instance = Instance(instance, drawer)
 
-  overlay = Overlay(image_path, page, opt.anottations)
+    # Traverse the PAGE-XML tree and draw the annotations:
+    instance.traverse_and_draw()
 
-  overlay.save(opt.output)
-
-if __name__ == "__main__":
-  main()
+    # Retrieve overlay and write it to output file:
+    cv2.imwrite(str(out_file), drawer.overlay())
