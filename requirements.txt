@@ -1,5 +1,4 @@
-argparse
-pathlib
+jsonschema
 numpy
-opencv-python
+opencv-python-headless
 webcolors
