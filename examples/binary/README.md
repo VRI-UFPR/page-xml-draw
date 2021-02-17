@@ -53,5 +53,5 @@ where the content of [profile.json](profile.json) is
 Output
 ------
 
-<img src="../../assets/images/OCR-D-IMG_DerGemeindebote-p08.png" width="45%"/>
-<img src="output.png" width="45%"/> 
+| [![Original](../../assets/images/OCR-D-IMG_DerGemeindebote-p08.png)](Original) | [![Binary](output.png)](Binary) |
+|:---:|:---:|

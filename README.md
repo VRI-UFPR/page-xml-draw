@@ -38,6 +38,8 @@ pip3 install git+https://github.com/GBN-DBP/page-xml-draw.git
 Usage
 =====
 
+The application flow consists of traversing the (PAGE-)XML content in order to find the layout annotation nodes, extract their polygons and then draw the overlays on the image. The user has to describe the traversal by specifying which node types are to be visited (and in which order) and when a given annotation type is supposed to be drawn, the overlay properties (e.g. color, transparency) must be also specified.
+
 Help Manual
 -----------
 
@@ -88,5 +90,5 @@ optional arguments:
 Examples
 --------
 
-- [Semi-transparent contrasting example](examples/contrast/README.md)
-- [Opaque binary (black-and-white) example](examples/binary/README.md)
+- [Semi-transparent contrasting example](examples/contrast)
+- [Opaque binary (black-and-white) example](examples/binary)
