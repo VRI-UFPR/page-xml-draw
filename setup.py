@@ -18,6 +18,9 @@ setuptools.setup(
     url="https://github.com/GBN-DBP/page_xml_draw",
     packages=setuptools.find_packages(),
     install_requires=install_requires,
+    package_data={
+      "": ["schema.json"]
+    },
     classifiers=[
         "Environment :: Console",
         "Intended Audience :: Science/Research",
