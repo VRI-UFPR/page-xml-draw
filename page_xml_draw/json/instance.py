@@ -2,9 +2,9 @@ class Instance():
     '''
     Utilities for parsing a JSON instance
     '''
-    def __init__(self, data, drawer):
+    def __init__(self, data, traverser):
         self.data = data
-        self.drawer = drawer
+        self.traverser = traverser
 
     def __bool__(self):
         '''
@@ -19,7 +19,7 @@ class Instance():
         item = self.data[key]
 
         if isinstance(item, dict):
-            return Instance(item, self.drawer)
+            return Instance(item, self.traverser)
         else:
             return item
 
@@ -46,7 +46,7 @@ class Instance():
             keys.append(key)
 
             if isinstance(item, dict):
-                items.append(Instance(item, self.drawer))
+                items.append(Instance(item, self.traverser))
             else:
                 items.append(item)
 
@@ -56,7 +56,7 @@ class Instance():
         '''
         Retrieve properties with specified prefix
         '''
-        items = Instance({}, self.drawer)
+        items = Instance({}, self.traverser)
 
         for key, item in self.items():
             if key.startswith(prefix):
@@ -68,7 +68,7 @@ class Instance():
 
     def draw(self):
         '''
-        Invoke drawer with retrieved drawing properties
+        Invoke traverser with retrieved drawing properties
         '''
         if 'FillColor' not in self:
             self['FillColor'] = None
@@ -85,7 +85,33 @@ class Instance():
             # Fallback opacity:
             self['Opacity'] = 0.3
 
-        self.drawer.draw_focused(
+        self.traverser.draw_focused(
+            self['FillColor'],
+            self['EdgeColor'],
+            self['EdgeThickness'],
+            self['Opacity']
+        )
+
+    def map(self):
+        '''
+        Invoke traverser with retrieved drawing properties
+        '''
+        if 'FillColor' not in self:
+            self['FillColor'] = None
+
+        if 'EdgeColor' not in self:
+            self['EdgeColor'] = None
+            self['EdgeThickness'] = None
+
+        if 'EdgeColor' in self and 'EdgeThickness' not in self:
+            # Fallback edge thickness:
+            self['EdgeThickness'] = 1
+
+        if 'Opacity' not in self:
+            # Fallback opacity:
+            self['Opacity'] = 0.3
+
+        self.traverser.map_focused(
             self['FillColor'],
             self['EdgeColor'],
             self['EdgeThickness'],
@@ -105,6 +131,23 @@ class Instance():
             drawing_props.draw()
 
         for key, item in page_props.items():
-            self.drawer.focus_on_children(key)
+            self.traverser.focus_on_children(key)
             item.traverse_and_draw()
-            self.drawer.focus_on_parents()
+            self.traverser.focus_on_parents()
+
+    def traverse_and_map(self):
+        '''
+        Traverse PAGE-XML tree as specified in JSON instance and map layout
+        annotations accordingly
+        '''
+        page_props = self.get_properties_by_prefix('PAGE-XML')
+        drawing_props = self.get_properties_by_prefix('Drawing')
+
+        # Only draw if drawing properties are specified:
+        if drawing_props:
+            drawing_props.map()
+
+        for key, item in page_props.items():
+            self.traverser.focus_on_children(key)
+            item.traverse_and_map()
+            self.traverser.focus_on_parents()

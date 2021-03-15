@@ -1,0 +1,37 @@
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/imagemapster@1.5.4/dist/jquery.imagemapster.min.js" ></script>
+
+<img id="page" src="{{ image_filename }}" usemap="#image-map" />
+
+<map name="image-map" id="image-map">
+{% for map in maps %}
+{% for coords in map.polygons  %}
+    <area type="{{ map.type }}" alt="" title="" href="#" shape="poly" coords="{{ coords }}" />
+{% endfor  %}
+{% endfor  %}
+</map>
+
+<script>
+function highlightOnMouseOver(data) {
+    this.highlight()
+}
+
+$('#page').mapster({
+    selected: true,
+    staticState: true,
+    showToolTip: true,
+    toolTipClose: ['area-mouseout'],
+    onMouseOver: highlightOnMouseOver,
+    mapKey: 'type',
+    areas: [
+        {% for map in maps %}
+        {
+            key: '{{ map.type }}',
+            fillColor: '{{ map.FillColor }}',
+            fillOpacity: '{{ map.Opacity }}',
+            toolTip: '<div>{{ map.type }}</div>'
+        },
+        {% endfor %}
+    ]
+});
+</script>

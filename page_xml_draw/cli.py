@@ -154,6 +154,12 @@ def get_opts():
     )
 
     parser.add_argument(
+        "--image-map",
+        action="store_true",
+        help="output HTML image map instead of image"
+    )
+
+    parser.add_argument(
         "--page",
         action=PageXmlAction,
         help="visit the 'Page' PAGE-XML annotations"
@@ -379,6 +385,11 @@ def get_opts():
             "Base directory '%s' is not readable" % base_dir_abs
         )
 
+    if options.image_map:
+        mode = "image-map"
+    else:
+        mode = "image"
+
     if options.profile:
         with open(str(options.profile), 'r') as fp:
             instance = json.loads(fp.read())
@@ -388,4 +399,4 @@ def get_opts():
     # Validate json instance against schema:
     schema.validate(instance)
 
-    return input_abs, output_abs, base_dir_abs, instance
+    return input_abs, output_abs, base_dir_abs, mode, instance

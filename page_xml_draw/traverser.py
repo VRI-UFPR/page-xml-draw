@@ -3,6 +3,8 @@ import numpy as np
 import cv2
 import webcolors
 
+from page_xml_draw.html.image_map import Map, ImageMap
+
 
 class Color:
     def __init__(self, string):
@@ -20,8 +22,11 @@ class Color:
         r, g, b = self.to_rgb()
         return b, g, r
 
+    def to_hashless_hex(self):
+        return self.hex[1:]
 
-class Drawer():
+
+class Traverser():
     '''
     PAGE-XML tree traverser and layout annotation drawer
     '''
@@ -33,6 +38,8 @@ class Drawer():
 
         # Read image:
         self.image = cv2.imread(str(image_path))
+
+        self.name = None
 
         # Focused nodes of the tree (root at start):
         self.focused = self.tree
@@ -49,12 +56,16 @@ class Drawer():
             dtype=np.float
         )
 
+        self.image_map = ImageMap(self.tree.get_imageFilename())
+
     def focus_on_children(self, name):
         '''
         Move focus to children nodes with given name
         '''
         # Save focused nodes as parents:
-        self.parent_stack.append(self.focused)
+        self.parent_stack.append((self.name, self.focused))
+
+        self.name = name
 
         if isinstance(self.focused, list):
             children = []
@@ -79,7 +90,7 @@ class Drawer():
         '''
         Move focus back to parent nodes
         '''
-        self.focused = self.parent_stack.pop()
+        self.name, self.focused = self.parent_stack.pop()
 
     def draw_focused(self, fill_color, edge_color, edge_thickness, opacity):
         '''
@@ -130,6 +141,25 @@ class Drawer():
                 edge_thickness
             )
 
+    def map_focused(self, fill_color, edge_color, edge_thickness, opacity):
+        '''
+        Map polygons associated to focused nodes
+        '''
+        if isinstance(self.focused, list):
+            polygons = [elm.get_polygon() for elm in self.focused]
+        else:
+            polygons = [self.focused.get_polygon()]
+
+        # TODO: User method for pairs of points?
+        polygons = [
+            ','.join(
+                [','.join([str(point) for point in pairs]) for pairs in poly]
+            ) for poly in polygons
+        ]
+
+        # Create map for polygons and append to image map:
+        self.image_map.add_map(Map(self.name, Color(fill_color).to_hashless_hex(), opacity, polygons))
+
     def overlay(self):
         '''
         Overlay image with drawn polygons
@@ -138,3 +168,6 @@ class Drawer():
         overlay = self.color_mask * self.weight_mask
 
         return image + overlay
+
+    def render(self):
+        return self.image_map.render()

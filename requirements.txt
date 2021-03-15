@@ -1,4 +1,6 @@
+lxml
 jsonschema
+jinja2
 numpy
 opencv-python-headless
 webcolors
