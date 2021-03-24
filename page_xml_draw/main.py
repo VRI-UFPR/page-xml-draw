@@ -8,7 +8,7 @@ from page_xml_draw.json.instance import Instance
 
 def main():
     # Get options from CLI:
-    in_file, out_file, base_dir, mode, instance = get_opts()
+    in_file, out_file, base_dir, output_format, instance = get_opts()
 
     # Parse PAGE-XML file and pass it to traverser:
     traverser = Traverser(parse(str(in_file), silence=True), base_dir)
@@ -16,13 +16,13 @@ def main():
     # Wrap JSON instance representing the profile:
     instance = Instance(instance, traverser)
 
-    if mode == "image":
+    if output_format == "image/png":
         # Traverse the PAGE-XML tree and draw the annotations:
         instance.traverse_and_draw()
 
         # Retrieve overlay and write it to output file:
         cv2.imwrite(str(out_file), traverser.overlay())
-    elif mode == "image-map":
+    elif output_format == "text/html":
         # Traverse the PAGE-XML tree and map the annotations:
         instance.traverse_and_map()
 

@@ -131,7 +131,7 @@ def get_opts():
         type=pathlib.Path,
         dest="output",
         required=True,
-        metavar=("<path/to/file>.{png,jpg}"),
+        metavar=("<path/to/file>.png"),
         help="path to output image file"
         # TODO: Support other extensions like TIFF
     )
@@ -154,7 +154,7 @@ def get_opts():
     )
 
     parser.add_argument(
-        "--image-map",
+        "--html",
         action="store_true",
         help="output HTML image map instead of image"
     )
@@ -385,10 +385,10 @@ def get_opts():
             "Base directory '%s' is not readable" % base_dir_abs
         )
 
-    if options.image_map:
-        mode = "image-map"
+    if options.html:
+        output_format = "text/html"
     else:
-        mode = "image"
+        output_abs = "image/png"
 
     if options.profile:
         with open(str(options.profile), 'r') as fp:
@@ -399,4 +399,4 @@ def get_opts():
     # Validate json instance against schema:
     schema.validate(instance)
 
-    return input_abs, output_abs, base_dir_abs, mode, instance
+    return input_abs, output_abs, base_dir_abs, output_format, instance
