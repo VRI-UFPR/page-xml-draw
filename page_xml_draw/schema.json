@@ -174,8 +174,14 @@
                 }
             ]
         },
-        "EdgeColor": {
-            "description": "Color to draw the polygon edges with",
+        "FillOpacity": {
+            "description": "Opacity to fill the polygons with",
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+        },
+        "StrokeColor": {
+            "description": "Color to draw the polygon strokes with",
             "oneOf": [
                 {
                     "$ref": "#/Drawing/HexColor"
@@ -185,13 +191,13 @@
                 }
             ]
         },
-        "EdgeThickness": {
-            "description": "Thickness of the edges of the polygons to be drawn",
+        "StrokeWidth": {
+            "description": "Width of the strokes of the polygons to be drawn",
             "type": "integer",
             "minimum": 0
         },
-        "Opacity": {
-            "description": "Opacity of the polygons to be drawn",
+        "StrokeOpacity": {
+            "description": "Opacity to draw the polygon strokes with",
             "type": "number",
             "minimum": 0,
             "maximum": 1
@@ -202,17 +208,20 @@
             "description": "Border PAGE-XML annotation",
             "type": "object",
             "properties": {
-                "Drawing/FillColor": {
+                "FillColor": {
                     "$ref": "#/Drawing/FillColor"
                 },
-                "Drawing/EdgeColor": {
-                    "$ref": "#/Drawing/EdgeColor"
+                "FillOpacity": {
+                    "$ref": "#/Drawing/FillOpacity"
                 },
-                "Drawing/EdgeThickness": {
-                    "$ref": "#/Drawing/EdgeThickness"
+                "StrokeColor": {
+                    "$ref": "#/Drawing/StrokeColor"
                 },
-                "Drawing/Opacity": {
-                    "$ref": "#/Drawing/Opacity"
+                "StrokeWidth": {
+                    "$ref": "#/Drawing/StrokeWidth"
+                },
+                "StrokeOpacity": {
+                    "$ref": "#/Drawing/StrokeOpacity"
                 }
             },
             "additionalProperties": false
@@ -221,17 +230,20 @@
             "description": "PrintSpace PAGE-XML annotation",
             "type": "object",
             "properties": {
-                "Drawing/FillColor": {
+                "FillColor": {
                     "$ref": "#/Drawing/FillColor"
                 },
-                "Drawing/EdgeColor": {
-                    "$ref": "#/Drawing/EdgeColor"
+                "FillOpacity": {
+                    "$ref": "#/Drawing/FillOpacity"
                 },
-                "Drawing/EdgeThickness": {
-                    "$ref": "#/Drawing/EdgeThickness"
+                "StrokeColor": {
+                    "$ref": "#/Drawing/StrokeColor"
                 },
-                "Drawing/Opacity": {
-                    "$ref": "#/Drawing/Opacity"
+                "StrokeWidth": {
+                    "$ref": "#/Drawing/StrokeWidth"
+                },
+                "StrokeOpacity": {
+                    "$ref": "#/Drawing/StrokeOpacity"
                 }
             },
             "additionalProperties": false
@@ -240,17 +252,20 @@
             "description": "Grapheme PAGE-XML annotation",
             "type": "object",
             "properties": {
-                "Drawing/FillColor": {
+                "FillColor": {
                     "$ref": "#/Drawing/FillColor"
                 },
-                "Drawing/EdgeColor": {
-                    "$ref": "#/Drawing/EdgeColor"
+                "FillOpacity": {
+                    "$ref": "#/Drawing/FillOpacity"
                 },
-                "Drawing/EdgeThickness": {
-                    "$ref": "#/Drawing/EdgeThickness"
+                "StrokeColor": {
+                    "$ref": "#/Drawing/StrokeColor"
                 },
-                "Drawing/Opacity": {
-                    "$ref": "#/Drawing/Opacity"
+                "StrokeWidth": {
+                    "$ref": "#/Drawing/StrokeWidth"
+                },
+                "StrokeOpacity": {
+                    "$ref": "#/Drawing/StrokeOpacity"
                 }
             },
             "additionalProperties": false
@@ -259,20 +274,23 @@
             "description": "Graphemes PAGE-XML annotation",
             "type": "object",
             "properties": {
-                "PAGE-XML/Grapheme": {
+                "Grapheme": {
                     "$ref": "#/PAGE-XML/Grapheme"
                 },
-                "Drawing/FillColor": {
+                "FillColor": {
                     "$ref": "#/Drawing/FillColor"
                 },
-                "Drawing/EdgeColor": {
-                    "$ref": "#/Drawing/EdgeColor"
+                "FillOpacity": {
+                    "$ref": "#/Drawing/FillOpacity"
                 },
-                "Drawing/EdgeThickness": {
-                    "$ref": "#/Drawing/EdgeThickness"
+                "StrokeColor": {
+                    "$ref": "#/Drawing/StrokeColor"
                 },
-                "Drawing/Opacity": {
-                    "$ref": "#/Drawing/Opacity"
+                "StrokeWidth": {
+                    "$ref": "#/Drawing/StrokeWidth"
+                },
+                "StrokeOpacity": {
+                    "$ref": "#/Drawing/StrokeOpacity"
                 }
             },
             "additionalProperties": false
@@ -281,20 +299,23 @@
             "description": "Glyph PAGE-XML annotation",
             "type": "object",
             "properties": {
-                "PAGE-XML/Graphemes": {
+                "Graphemes": {
                     "$ref": "#/PAGE-XML/Graphemes"
                 },
-                "Drawing/FillColor": {
+                "FillColor": {
                     "$ref": "#/Drawing/FillColor"
                 },
-                "Drawing/EdgeColor": {
-                    "$ref": "#/Drawing/EdgeColor"
+                "FillOpacity": {
+                    "$ref": "#/Drawing/FillOpacity"
                 },
-                "Drawing/EdgeThickness": {
-                    "$ref": "#/Drawing/EdgeThickness"
+                "StrokeColor": {
+                    "$ref": "#/Drawing/StrokeColor"
                 },
-                "Drawing/Opacity": {
-                    "$ref": "#/Drawing/Opacity"
+                "StrokeWidth": {
+                    "$ref": "#/Drawing/StrokeWidth"
+                },
+                "StrokeOpacity": {
+                    "$ref": "#/Drawing/StrokeOpacity"
                 }
             },
             "additionalProperties": false
@@ -303,20 +324,23 @@
             "description": "Word PAGE-XML annotation",
             "type": "object",
             "properties": {
-                "PAGE-XML/Glyph": {
+                "Glyph": {
                     "$ref": "#/PAGE-XML/Glyph"
                 },
-                "Drawing/FillColor": {
+                "FillColor": {
                     "$ref": "#/Drawing/FillColor"
                 },
-                "Drawing/EdgeColor": {
-                    "$ref": "#/Drawing/EdgeColor"
+                "FillOpacity": {
+                    "$ref": "#/Drawing/FillOpacity"
                 },
-                "Drawing/EdgeThickness": {
-                    "$ref": "#/Drawing/EdgeThickness"
+                "StrokeColor": {
+                    "$ref": "#/Drawing/StrokeColor"
                 },
-                "Drawing/Opacity": {
-                    "$ref": "#/Drawing/Opacity"
+                "StrokeWidth": {
+                    "$ref": "#/Drawing/StrokeWidth"
+                },
+                "StrokeOpacity": {
+                    "$ref": "#/Drawing/StrokeOpacity"
                 }
             },
             "additionalProperties": false
@@ -325,172 +349,1104 @@
             "description": "TextLine PAGE-XML annotation",
             "type": "object",
             "properties": {
-                "PAGE-XML/Word": {
+                "Word": {
                     "$ref": "#/PAGE-XML/Word"
                 },
-                "Drawing/FillColor": {
+                "FillColor": {
                     "$ref": "#/Drawing/FillColor"
                 },
-                "Drawing/EdgeColor": {
-                    "$ref": "#/Drawing/EdgeColor"
+                "FillOpacity": {
+                    "$ref": "#/Drawing/FillOpacity"
                 },
-                "Drawing/EdgeThickness": {
-                    "$ref": "#/Drawing/EdgeThickness"
+                "StrokeColor": {
+                    "$ref": "#/Drawing/StrokeColor"
                 },
-                "Drawing/Opacity": {
-                    "$ref": "#/Drawing/Opacity"
-                }
-            },
-            "additionalProperties": false
-        },
-        "Region": {
-            "description": "Base Region PAGE-XML annotation (RegionType)",
-            "type": "object",
-            "properties": {
-                "PAGE-XML/TextLine": {
-                    "$ref": "#/PAGE-XML/TextLine"
+                "StrokeWidth": {
+                    "$ref": "#/Drawing/StrokeWidth"
                 },
-                "Drawing/FillColor": {
-                    "$ref": "#/Drawing/FillColor"
-                },
-                "Drawing/EdgeColor": {
-                    "$ref": "#/Drawing/EdgeColor"
-                },
-                "Drawing/EdgeThickness": {
-                    "$ref": "#/Drawing/EdgeThickness"
-                },
-                "Drawing/Opacity": {
-                    "$ref": "#/Drawing/Opacity"
+                "StrokeOpacity": {
+                    "$ref": "#/Drawing/StrokeOpacity"
                 }
             },
             "additionalProperties": false
         },
         "TextRegion": {
             "description": "TextRegion PAGE-XML annotation",
-            "$ref": "#/PAGE-XML/Region"
+            "type": "object",
+            "properties": {
+                "TextLine": {
+                    "$ref": "#/PAGE-XML/TextLine"
+                },
+                "TextRegion": {
+                    "$ref": "#/PAGE-XML/TextRegion"
+                },
+                "ImageRegion": {
+                    "$ref": "#/PAGE-XML/ImageRegion"
+                },
+                "LineDrawingingRegion": {
+                    "$ref": "#/PAGE-XML/LineDrawingRegion"
+                },
+                "GraphicRegion": {
+                    "$ref": "#/PAGE-XML/GraphicRegion"
+                },
+                "TableRegion": {
+                    "$ref": "#/PAGE-XML/TableRegion"
+                },
+                "ChartRegion": {
+                    "$ref": "#/PAGE-XML/ChartRegion"
+                },
+                "MapRegion": {
+                    "$ref": "#/PAGE-XML/MapRegion"
+                },
+                "SeparatorRegion": {
+                    "$ref": "#/PAGE-XML/SeparatorRegion"
+                },
+                "MathsRegion": {
+                    "$ref": "#/PAGE-XML/MathsRegion"
+                },
+                "ChemRegion": {
+                    "$ref": "#/PAGE-XML/ChemRegion"
+                },
+                "MusicRegion": {
+                    "$ref": "#/PAGE-XML/MusicRegion"
+                },
+                "AdvertRegion": {
+                    "$ref": "#/PAGE-XML/AdvertRegion"
+                },
+                "NoiseRegion": {
+                    "$ref": "#/PAGE-XML/NoiseRegion"
+                },
+                "UnkownRegion": {
+                    "$ref": "#/PAGE-XML/UnknownRegion"
+                },
+                "CustomRegion": {
+                    "$ref": "#/PAGE-XML/CustomRegion"
+                },
+                "FillColor": {
+                    "$ref": "#/Drawing/FillColor"
+                },
+                "FillOpacity": {
+                    "$ref": "#/Drawing/FillOpacity"
+                },
+                "StrokeColor": {
+                    "$ref": "#/Drawing/StrokeColor"
+                },
+                "StrokeWidth": {
+                    "$ref": "#/Drawing/StrokeWidth"
+                },
+                "StrokeOpacity": {
+                    "$ref": "#/Drawing/StrokeOpacity"
+                }
+            },
+            "additionalProperties": false
         },
         "ImageRegion": {
             "description": "ImageRegion PAGE-XML annotation",
-            "$ref": "#/PAGE-XML/Region"
+            "type": "object",
+            "properties": {
+                "TextRegion": {
+                    "$ref": "#/PAGE-XML/TextRegion"
+                },
+                "ImageRegion": {
+                    "$ref": "#/PAGE-XML/ImageRegion"
+                },
+                "LineDrawingingRegion": {
+                    "$ref": "#/PAGE-XML/LineDrawingRegion"
+                },
+                "GraphicRegion": {
+                    "$ref": "#/PAGE-XML/GraphicRegion"
+                },
+                "TableRegion": {
+                    "$ref": "#/PAGE-XML/TableRegion"
+                },
+                "ChartRegion": {
+                    "$ref": "#/PAGE-XML/ChartRegion"
+                },
+                "MapRegion": {
+                    "$ref": "#/PAGE-XML/MapRegion"
+                },
+                "SeparatorRegion": {
+                    "$ref": "#/PAGE-XML/SeparatorRegion"
+                },
+                "MathsRegion": {
+                    "$ref": "#/PAGE-XML/MathsRegion"
+                },
+                "ChemRegion": {
+                    "$ref": "#/PAGE-XML/ChemRegion"
+                },
+                "MusicRegion": {
+                    "$ref": "#/PAGE-XML/MusicRegion"
+                },
+                "AdvertRegion": {
+                    "$ref": "#/PAGE-XML/AdvertRegion"
+                },
+                "NoiseRegion": {
+                    "$ref": "#/PAGE-XML/NoiseRegion"
+                },
+                "UnkownRegion": {
+                    "$ref": "#/PAGE-XML/UnknownRegion"
+                },
+                "CustomRegion": {
+                    "$ref": "#/PAGE-XML/CustomRegion"
+                },
+                "FillColor": {
+                    "$ref": "#/Drawing/FillColor"
+                },
+                "FillOpacity": {
+                    "$ref": "#/Drawing/FillOpacity"
+                },
+                "StrokeColor": {
+                    "$ref": "#/Drawing/StrokeColor"
+                },
+                "StrokeWidth": {
+                    "$ref": "#/Drawing/StrokeWidth"
+                },
+                "StrokeOpacity": {
+                    "$ref": "#/Drawing/StrokeOpacity"
+                }
+            },
+            "additionalProperties": false
         },
         "LineDrawingRegion": {
             "description": "LineDrawingingRegion PAGE-XML annotation",
-            "$ref": "#/PAGE-XML/Region"
+            "type": "object",
+            "properties": {
+                "TextRegion": {
+                    "$ref": "#/PAGE-XML/TextRegion"
+                },
+                "ImageRegion": {
+                    "$ref": "#/PAGE-XML/ImageRegion"
+                },
+                "LineDrawingingRegion": {
+                    "$ref": "#/PAGE-XML/LineDrawingRegion"
+                },
+                "GraphicRegion": {
+                    "$ref": "#/PAGE-XML/GraphicRegion"
+                },
+                "TableRegion": {
+                    "$ref": "#/PAGE-XML/TableRegion"
+                },
+                "ChartRegion": {
+                    "$ref": "#/PAGE-XML/ChartRegion"
+                },
+                "MapRegion": {
+                    "$ref": "#/PAGE-XML/MapRegion"
+                },
+                "SeparatorRegion": {
+                    "$ref": "#/PAGE-XML/SeparatorRegion"
+                },
+                "MathsRegion": {
+                    "$ref": "#/PAGE-XML/MathsRegion"
+                },
+                "ChemRegion": {
+                    "$ref": "#/PAGE-XML/ChemRegion"
+                },
+                "MusicRegion": {
+                    "$ref": "#/PAGE-XML/MusicRegion"
+                },
+                "AdvertRegion": {
+                    "$ref": "#/PAGE-XML/AdvertRegion"
+                },
+                "NoiseRegion": {
+                    "$ref": "#/PAGE-XML/NoiseRegion"
+                },
+                "UnkownRegion": {
+                    "$ref": "#/PAGE-XML/UnknownRegion"
+                },
+                "CustomRegion": {
+                    "$ref": "#/PAGE-XML/CustomRegion"
+                },
+                "FillColor": {
+                    "$ref": "#/Drawing/FillColor"
+                },
+                "FillOpacity": {
+                    "$ref": "#/Drawing/FillOpacity"
+                },
+                "StrokeColor": {
+                    "$ref": "#/Drawing/StrokeColor"
+                },
+                "StrokeWidth": {
+                    "$ref": "#/Drawing/StrokeWidth"
+                },
+                "StrokeOpacity": {
+                    "$ref": "#/Drawing/StrokeOpacity"
+                }
+            },
+            "additionalProperties": false
         },
         "GraphicRegion": {
             "description": "GraphicRegion PAGE-XML annotation",
-            "$ref": "#/PAGE-XML/Region"
+            "type": "object",
+            "properties": {
+                "TextRegion": {
+                    "$ref": "#/PAGE-XML/TextRegion"
+                },
+                "ImageRegion": {
+                    "$ref": "#/PAGE-XML/ImageRegion"
+                },
+                "LineDrawingingRegion": {
+                    "$ref": "#/PAGE-XML/LineDrawingRegion"
+                },
+                "GraphicRegion": {
+                    "$ref": "#/PAGE-XML/GraphicRegion"
+                },
+                "TableRegion": {
+                    "$ref": "#/PAGE-XML/TableRegion"
+                },
+                "ChartRegion": {
+                    "$ref": "#/PAGE-XML/ChartRegion"
+                },
+                "MapRegion": {
+                    "$ref": "#/PAGE-XML/MapRegion"
+                },
+                "SeparatorRegion": {
+                    "$ref": "#/PAGE-XML/SeparatorRegion"
+                },
+                "MathsRegion": {
+                    "$ref": "#/PAGE-XML/MathsRegion"
+                },
+                "ChemRegion": {
+                    "$ref": "#/PAGE-XML/ChemRegion"
+                },
+                "MusicRegion": {
+                    "$ref": "#/PAGE-XML/MusicRegion"
+                },
+                "AdvertRegion": {
+                    "$ref": "#/PAGE-XML/AdvertRegion"
+                },
+                "NoiseRegion": {
+                    "$ref": "#/PAGE-XML/NoiseRegion"
+                },
+                "UnkownRegion": {
+                    "$ref": "#/PAGE-XML/UnknownRegion"
+                },
+                "CustomRegion": {
+                    "$ref": "#/PAGE-XML/CustomRegion"
+                },
+                "FillColor": {
+                    "$ref": "#/Drawing/FillColor"
+                },
+                "FillOpacity": {
+                    "$ref": "#/Drawing/FillOpacity"
+                },
+                "StrokeColor": {
+                    "$ref": "#/Drawing/StrokeColor"
+                },
+                "StrokeWidth": {
+                    "$ref": "#/Drawing/StrokeWidth"
+                },
+                "StrokeOpacity": {
+                    "$ref": "#/Drawing/StrokeOpacity"
+                }
+            },
+            "additionalProperties": false
         },
         "TableRegion": {
             "description": "TableRegion PAGE-XML annotation",
-            "$ref": "#/PAGE-XML/Region"
+            "type": "object",
+            "properties": {
+                "TextRegion": {
+                    "$ref": "#/PAGE-XML/TextRegion"
+                },
+                "ImageRegion": {
+                    "$ref": "#/PAGE-XML/ImageRegion"
+                },
+                "LineDrawingingRegion": {
+                    "$ref": "#/PAGE-XML/LineDrawingRegion"
+                },
+                "GraphicRegion": {
+                    "$ref": "#/PAGE-XML/GraphicRegion"
+                },
+                "TableRegion": {
+                    "$ref": "#/PAGE-XML/TableRegion"
+                },
+                "ChartRegion": {
+                    "$ref": "#/PAGE-XML/ChartRegion"
+                },
+                "MapRegion": {
+                    "$ref": "#/PAGE-XML/MapRegion"
+                },
+                "SeparatorRegion": {
+                    "$ref": "#/PAGE-XML/SeparatorRegion"
+                },
+                "MathsRegion": {
+                    "$ref": "#/PAGE-XML/MathsRegion"
+                },
+                "ChemRegion": {
+                    "$ref": "#/PAGE-XML/ChemRegion"
+                },
+                "MusicRegion": {
+                    "$ref": "#/PAGE-XML/MusicRegion"
+                },
+                "AdvertRegion": {
+                    "$ref": "#/PAGE-XML/AdvertRegion"
+                },
+                "NoiseRegion": {
+                    "$ref": "#/PAGE-XML/NoiseRegion"
+                },
+                "UnkownRegion": {
+                    "$ref": "#/PAGE-XML/UnknownRegion"
+                },
+                "CustomRegion": {
+                    "$ref": "#/PAGE-XML/CustomRegion"
+                },
+                "FillColor": {
+                    "$ref": "#/Drawing/FillColor"
+                },
+                "FillOpacity": {
+                    "$ref": "#/Drawing/FillOpacity"
+                },
+                "StrokeColor": {
+                    "$ref": "#/Drawing/StrokeColor"
+                },
+                "StrokeWidth": {
+                    "$ref": "#/Drawing/StrokeWidth"
+                },
+                "StrokeOpacity": {
+                    "$ref": "#/Drawing/StrokeOpacity"
+                }
+            },
+            "additionalProperties": false
         },
         "ChartRegion": {
             "description": "ChartRegion PAGE-XML annotation",
-            "$ref": "#/PAGE-XML/Region"
+            "type": "object",
+            "properties": {
+                "TextRegion": {
+                    "$ref": "#/PAGE-XML/TextRegion"
+                },
+                "ImageRegion": {
+                    "$ref": "#/PAGE-XML/ImageRegion"
+                },
+                "LineDrawingingRegion": {
+                    "$ref": "#/PAGE-XML/LineDrawingRegion"
+                },
+                "GraphicRegion": {
+                    "$ref": "#/PAGE-XML/GraphicRegion"
+                },
+                "TableRegion": {
+                    "$ref": "#/PAGE-XML/TableRegion"
+                },
+                "ChartRegion": {
+                    "$ref": "#/PAGE-XML/ChartRegion"
+                },
+                "MapRegion": {
+                    "$ref": "#/PAGE-XML/MapRegion"
+                },
+                "SeparatorRegion": {
+                    "$ref": "#/PAGE-XML/SeparatorRegion"
+                },
+                "MathsRegion": {
+                    "$ref": "#/PAGE-XML/MathsRegion"
+                },
+                "ChemRegion": {
+                    "$ref": "#/PAGE-XML/ChemRegion"
+                },
+                "MusicRegion": {
+                    "$ref": "#/PAGE-XML/MusicRegion"
+                },
+                "AdvertRegion": {
+                    "$ref": "#/PAGE-XML/AdvertRegion"
+                },
+                "NoiseRegion": {
+                    "$ref": "#/PAGE-XML/NoiseRegion"
+                },
+                "UnkownRegion": {
+                    "$ref": "#/PAGE-XML/UnknownRegion"
+                },
+                "CustomRegion": {
+                    "$ref": "#/PAGE-XML/CustomRegion"
+                },
+                "FillColor": {
+                    "$ref": "#/Drawing/FillColor"
+                },
+                "FillOpacity": {
+                    "$ref": "#/Drawing/FillOpacity"
+                },
+                "StrokeColor": {
+                    "$ref": "#/Drawing/StrokeColor"
+                },
+                "StrokeWidth": {
+                    "$ref": "#/Drawing/StrokeWidth"
+                },
+                "StrokeOpacity": {
+                    "$ref": "#/Drawing/StrokeOpacity"
+                }
+            },
+            "additionalProperties": false
         },
         "MapRegion": {
             "description": "MapRegion PAGE-XML annotation",
-            "$ref": "#/PAGE-XML/Region"
+            "type": "object",
+            "properties": {
+                "TextRegion": {
+                    "$ref": "#/PAGE-XML/TextRegion"
+                },
+                "ImageRegion": {
+                    "$ref": "#/PAGE-XML/ImageRegion"
+                },
+                "LineDrawingingRegion": {
+                    "$ref": "#/PAGE-XML/LineDrawingRegion"
+                },
+                "GraphicRegion": {
+                    "$ref": "#/PAGE-XML/GraphicRegion"
+                },
+                "TableRegion": {
+                    "$ref": "#/PAGE-XML/TableRegion"
+                },
+                "ChartRegion": {
+                    "$ref": "#/PAGE-XML/ChartRegion"
+                },
+                "MapRegion": {
+                    "$ref": "#/PAGE-XML/MapRegion"
+                },
+                "SeparatorRegion": {
+                    "$ref": "#/PAGE-XML/SeparatorRegion"
+                },
+                "MathsRegion": {
+                    "$ref": "#/PAGE-XML/MathsRegion"
+                },
+                "ChemRegion": {
+                    "$ref": "#/PAGE-XML/ChemRegion"
+                },
+                "MusicRegion": {
+                    "$ref": "#/PAGE-XML/MusicRegion"
+                },
+                "AdvertRegion": {
+                    "$ref": "#/PAGE-XML/AdvertRegion"
+                },
+                "NoiseRegion": {
+                    "$ref": "#/PAGE-XML/NoiseRegion"
+                },
+                "UnkownRegion": {
+                    "$ref": "#/PAGE-XML/UnknownRegion"
+                },
+                "CustomRegion": {
+                    "$ref": "#/PAGE-XML/CustomRegion"
+                },
+                "FillColor": {
+                    "$ref": "#/Drawing/FillColor"
+                },
+                "FillOpacity": {
+                    "$ref": "#/Drawing/FillOpacity"
+                },
+                "StrokeColor": {
+                    "$ref": "#/Drawing/StrokeColor"
+                },
+                "StrokeWidth": {
+                    "$ref": "#/Drawing/StrokeWidth"
+                },
+                "StrokeOpacity": {
+                    "$ref": "#/Drawing/StrokeOpacity"
+                }
+            },
+            "additionalProperties": false
         },
         "SeparatorRegion": {
             "description": "SeparatorRegion PAGE-XML annotation",
-            "$ref": "#/PAGE-XML/Region"
+            "type": "object",
+            "properties": {
+                "TextRegion": {
+                    "$ref": "#/PAGE-XML/TextRegion"
+                },
+                "ImageRegion": {
+                    "$ref": "#/PAGE-XML/ImageRegion"
+                },
+                "LineDrawingingRegion": {
+                    "$ref": "#/PAGE-XML/LineDrawingRegion"
+                },
+                "GraphicRegion": {
+                    "$ref": "#/PAGE-XML/GraphicRegion"
+                },
+                "TableRegion": {
+                    "$ref": "#/PAGE-XML/TableRegion"
+                },
+                "ChartRegion": {
+                    "$ref": "#/PAGE-XML/ChartRegion"
+                },
+                "MapRegion": {
+                    "$ref": "#/PAGE-XML/MapRegion"
+                },
+                "SeparatorRegion": {
+                    "$ref": "#/PAGE-XML/SeparatorRegion"
+                },
+                "MathsRegion": {
+                    "$ref": "#/PAGE-XML/MathsRegion"
+                },
+                "ChemRegion": {
+                    "$ref": "#/PAGE-XML/ChemRegion"
+                },
+                "MusicRegion": {
+                    "$ref": "#/PAGE-XML/MusicRegion"
+                },
+                "AdvertRegion": {
+                    "$ref": "#/PAGE-XML/AdvertRegion"
+                },
+                "NoiseRegion": {
+                    "$ref": "#/PAGE-XML/NoiseRegion"
+                },
+                "UnkownRegion": {
+                    "$ref": "#/PAGE-XML/UnknownRegion"
+                },
+                "CustomRegion": {
+                    "$ref": "#/PAGE-XML/CustomRegion"
+                },
+                "FillColor": {
+                    "$ref": "#/Drawing/FillColor"
+                },
+                "FillOpacity": {
+                    "$ref": "#/Drawing/FillOpacity"
+                },
+                "StrokeColor": {
+                    "$ref": "#/Drawing/StrokeColor"
+                },
+                "StrokeWidth": {
+                    "$ref": "#/Drawing/StrokeWidth"
+                },
+                "StrokeOpacity": {
+                    "$ref": "#/Drawing/StrokeOpacity"
+                }
+            },
+            "additionalProperties": false
         },
         "MathsRegion": {
             "description": "MathsRegion PAGE-XML annotation",
-            "$ref": "#/PAGE-XML/Region"
+            "type": "object",
+            "properties": {
+                "TextRegion": {
+                    "$ref": "#/PAGE-XML/TextRegion"
+                },
+                "ImageRegion": {
+                    "$ref": "#/PAGE-XML/ImageRegion"
+                },
+                "LineDrawingingRegion": {
+                    "$ref": "#/PAGE-XML/LineDrawingRegion"
+                },
+                "GraphicRegion": {
+                    "$ref": "#/PAGE-XML/GraphicRegion"
+                },
+                "TableRegion": {
+                    "$ref": "#/PAGE-XML/TableRegion"
+                },
+                "ChartRegion": {
+                    "$ref": "#/PAGE-XML/ChartRegion"
+                },
+                "MapRegion": {
+                    "$ref": "#/PAGE-XML/MapRegion"
+                },
+                "SeparatorRegion": {
+                    "$ref": "#/PAGE-XML/SeparatorRegion"
+                },
+                "MathsRegion": {
+                    "$ref": "#/PAGE-XML/MathsRegion"
+                },
+                "ChemRegion": {
+                    "$ref": "#/PAGE-XML/ChemRegion"
+                },
+                "MusicRegion": {
+                    "$ref": "#/PAGE-XML/MusicRegion"
+                },
+                "AdvertRegion": {
+                    "$ref": "#/PAGE-XML/AdvertRegion"
+                },
+                "NoiseRegion": {
+                    "$ref": "#/PAGE-XML/NoiseRegion"
+                },
+                "UnkownRegion": {
+                    "$ref": "#/PAGE-XML/UnknownRegion"
+                },
+                "CustomRegion": {
+                    "$ref": "#/PAGE-XML/CustomRegion"
+                },
+                "FillColor": {
+                    "$ref": "#/Drawing/FillColor"
+                },
+                "FillOpacity": {
+                    "$ref": "#/Drawing/FillOpacity"
+                },
+                "StrokeColor": {
+                    "$ref": "#/Drawing/StrokeColor"
+                },
+                "StrokeWidth": {
+                    "$ref": "#/Drawing/StrokeWidth"
+                },
+                "StrokeOpacity": {
+                    "$ref": "#/Drawing/StrokeOpacity"
+                }
+            },
+            "additionalProperties": false
         },
         "ChemRegion": {
             "description": "ChemRegion PAGE-XML annotation",
-            "$ref": "#/PAGE-XML/Region"
+            "type": "object",
+            "properties": {
+                "TextRegion": {
+                    "$ref": "#/PAGE-XML/TextRegion"
+                },
+                "ImageRegion": {
+                    "$ref": "#/PAGE-XML/ImageRegion"
+                },
+                "LineDrawingingRegion": {
+                    "$ref": "#/PAGE-XML/LineDrawingRegion"
+                },
+                "GraphicRegion": {
+                    "$ref": "#/PAGE-XML/GraphicRegion"
+                },
+                "TableRegion": {
+                    "$ref": "#/PAGE-XML/TableRegion"
+                },
+                "ChartRegion": {
+                    "$ref": "#/PAGE-XML/ChartRegion"
+                },
+                "MapRegion": {
+                    "$ref": "#/PAGE-XML/MapRegion"
+                },
+                "SeparatorRegion": {
+                    "$ref": "#/PAGE-XML/SeparatorRegion"
+                },
+                "MathsRegion": {
+                    "$ref": "#/PAGE-XML/MathsRegion"
+                },
+                "ChemRegion": {
+                    "$ref": "#/PAGE-XML/ChemRegion"
+                },
+                "MusicRegion": {
+                    "$ref": "#/PAGE-XML/MusicRegion"
+                },
+                "AdvertRegion": {
+                    "$ref": "#/PAGE-XML/AdvertRegion"
+                },
+                "NoiseRegion": {
+                    "$ref": "#/PAGE-XML/NoiseRegion"
+                },
+                "UnkownRegion": {
+                    "$ref": "#/PAGE-XML/UnknownRegion"
+                },
+                "CustomRegion": {
+                    "$ref": "#/PAGE-XML/CustomRegion"
+                },
+                "FillColor": {
+                    "$ref": "#/Drawing/FillColor"
+                },
+                "FillOpacity": {
+                    "$ref": "#/Drawing/FillOpacity"
+                },
+                "StrokeColor": {
+                    "$ref": "#/Drawing/StrokeColor"
+                },
+                "StrokeWidth": {
+                    "$ref": "#/Drawing/StrokeWidth"
+                },
+                "StrokeOpacity": {
+                    "$ref": "#/Drawing/StrokeOpacity"
+                }
+            },
+            "additionalProperties": false
         },
         "MusicRegion": {
             "description": "MusicRegion PAGE-XML annotation",
-            "$ref": "#/PAGE-XML/Region"
+            "type": "object",
+            "properties": {
+                "TextRegion": {
+                    "$ref": "#/PAGE-XML/TextRegion"
+                },
+                "ImageRegion": {
+                    "$ref": "#/PAGE-XML/ImageRegion"
+                },
+                "LineDrawingingRegion": {
+                    "$ref": "#/PAGE-XML/LineDrawingRegion"
+                },
+                "GraphicRegion": {
+                    "$ref": "#/PAGE-XML/GraphicRegion"
+                },
+                "TableRegion": {
+                    "$ref": "#/PAGE-XML/TableRegion"
+                },
+                "ChartRegion": {
+                    "$ref": "#/PAGE-XML/ChartRegion"
+                },
+                "MapRegion": {
+                    "$ref": "#/PAGE-XML/MapRegion"
+                },
+                "SeparatorRegion": {
+                    "$ref": "#/PAGE-XML/SeparatorRegion"
+                },
+                "MathsRegion": {
+                    "$ref": "#/PAGE-XML/MathsRegion"
+                },
+                "ChemRegion": {
+                    "$ref": "#/PAGE-XML/ChemRegion"
+                },
+                "MusicRegion": {
+                    "$ref": "#/PAGE-XML/MusicRegion"
+                },
+                "AdvertRegion": {
+                    "$ref": "#/PAGE-XML/AdvertRegion"
+                },
+                "NoiseRegion": {
+                    "$ref": "#/PAGE-XML/NoiseRegion"
+                },
+                "UnkownRegion": {
+                    "$ref": "#/PAGE-XML/UnknownRegion"
+                },
+                "CustomRegion": {
+                    "$ref": "#/PAGE-XML/CustomRegion"
+                },
+                "FillColor": {
+                    "$ref": "#/Drawing/FillColor"
+                },
+                "FillOpacity": {
+                    "$ref": "#/Drawing/FillOpacity"
+                },
+                "StrokeColor": {
+                    "$ref": "#/Drawing/StrokeColor"
+                },
+                "StrokeWidth": {
+                    "$ref": "#/Drawing/StrokeWidth"
+                },
+                "StrokeOpacity": {
+                    "$ref": "#/Drawing/StrokeOpacity"
+                }
+            },
+            "additionalProperties": false
         },
         "AdvertRegion": {
             "description": "AdvertRegion PAGE-XML annotation",
-            "$ref": "#/PAGE-XML/Region"
+            "type": "object",
+            "properties": {
+                "TextRegion": {
+                    "$ref": "#/PAGE-XML/TextRegion"
+                },
+                "ImageRegion": {
+                    "$ref": "#/PAGE-XML/ImageRegion"
+                },
+                "LineDrawingingRegion": {
+                    "$ref": "#/PAGE-XML/LineDrawingRegion"
+                },
+                "GraphicRegion": {
+                    "$ref": "#/PAGE-XML/GraphicRegion"
+                },
+                "TableRegion": {
+                    "$ref": "#/PAGE-XML/TableRegion"
+                },
+                "ChartRegion": {
+                    "$ref": "#/PAGE-XML/ChartRegion"
+                },
+                "MapRegion": {
+                    "$ref": "#/PAGE-XML/MapRegion"
+                },
+                "SeparatorRegion": {
+                    "$ref": "#/PAGE-XML/SeparatorRegion"
+                },
+                "MathsRegion": {
+                    "$ref": "#/PAGE-XML/MathsRegion"
+                },
+                "ChemRegion": {
+                    "$ref": "#/PAGE-XML/ChemRegion"
+                },
+                "MusicRegion": {
+                    "$ref": "#/PAGE-XML/MusicRegion"
+                },
+                "AdvertRegion": {
+                    "$ref": "#/PAGE-XML/AdvertRegion"
+                },
+                "NoiseRegion": {
+                    "$ref": "#/PAGE-XML/NoiseRegion"
+                },
+                "UnkownRegion": {
+                    "$ref": "#/PAGE-XML/UnknownRegion"
+                },
+                "CustomRegion": {
+                    "$ref": "#/PAGE-XML/CustomRegion"
+                },
+                "FillColor": {
+                    "$ref": "#/Drawing/FillColor"
+                },
+                "FillOpacity": {
+                    "$ref": "#/Drawing/FillOpacity"
+                },
+                "StrokeColor": {
+                    "$ref": "#/Drawing/StrokeColor"
+                },
+                "StrokeWidth": {
+                    "$ref": "#/Drawing/StrokeWidth"
+                },
+                "StrokeOpacity": {
+                    "$ref": "#/Drawing/StrokeOpacity"
+                }
+            },
+            "additionalProperties": false
         },
         "NoiseRegion": {
             "description": "NoiseRegion PAGE-XML annotation",
-            "$ref": "#/PAGE-XML/Region"
+            "type": "object",
+            "properties": {
+                "TextRegion": {
+                    "$ref": "#/PAGE-XML/TextRegion"
+                },
+                "ImageRegion": {
+                    "$ref": "#/PAGE-XML/ImageRegion"
+                },
+                "LineDrawingingRegion": {
+                    "$ref": "#/PAGE-XML/LineDrawingRegion"
+                },
+                "GraphicRegion": {
+                    "$ref": "#/PAGE-XML/GraphicRegion"
+                },
+                "TableRegion": {
+                    "$ref": "#/PAGE-XML/TableRegion"
+                },
+                "ChartRegion": {
+                    "$ref": "#/PAGE-XML/ChartRegion"
+                },
+                "MapRegion": {
+                    "$ref": "#/PAGE-XML/MapRegion"
+                },
+                "SeparatorRegion": {
+                    "$ref": "#/PAGE-XML/SeparatorRegion"
+                },
+                "MathsRegion": {
+                    "$ref": "#/PAGE-XML/MathsRegion"
+                },
+                "ChemRegion": {
+                    "$ref": "#/PAGE-XML/ChemRegion"
+                },
+                "MusicRegion": {
+                    "$ref": "#/PAGE-XML/MusicRegion"
+                },
+                "AdvertRegion": {
+                    "$ref": "#/PAGE-XML/AdvertRegion"
+                },
+                "NoiseRegion": {
+                    "$ref": "#/PAGE-XML/NoiseRegion"
+                },
+                "UnkownRegion": {
+                    "$ref": "#/PAGE-XML/UnknownRegion"
+                },
+                "CustomRegion": {
+                    "$ref": "#/PAGE-XML/CustomRegion"
+                },
+                "FillColor": {
+                    "$ref": "#/Drawing/FillColor"
+                },
+                "FillOpacity": {
+                    "$ref": "#/Drawing/FillOpacity"
+                },
+                "StrokeColor": {
+                    "$ref": "#/Drawing/StrokeColor"
+                },
+                "StrokeWidth": {
+                    "$ref": "#/Drawing/StrokeWidth"
+                },
+                "StrokeOpacity": {
+                    "$ref": "#/Drawing/StrokeOpacity"
+                }
+            },
+            "additionalProperties": false
         },
         "UnknownRegion": {
             "description": "UnknownRegion PAGE-XML annotation",
-            "$ref": "#/PAGE-XML/Region"
+            "type": "object",
+            "properties": {
+                "TextRegion": {
+                    "$ref": "#/PAGE-XML/TextRegion"
+                },
+                "ImageRegion": {
+                    "$ref": "#/PAGE-XML/ImageRegion"
+                },
+                "LineDrawingingRegion": {
+                    "$ref": "#/PAGE-XML/LineDrawingRegion"
+                },
+                "GraphicRegion": {
+                    "$ref": "#/PAGE-XML/GraphicRegion"
+                },
+                "TableRegion": {
+                    "$ref": "#/PAGE-XML/TableRegion"
+                },
+                "ChartRegion": {
+                    "$ref": "#/PAGE-XML/ChartRegion"
+                },
+                "MapRegion": {
+                    "$ref": "#/PAGE-XML/MapRegion"
+                },
+                "SeparatorRegion": {
+                    "$ref": "#/PAGE-XML/SeparatorRegion"
+                },
+                "MathsRegion": {
+                    "$ref": "#/PAGE-XML/MathsRegion"
+                },
+                "ChemRegion": {
+                    "$ref": "#/PAGE-XML/ChemRegion"
+                },
+                "MusicRegion": {
+                    "$ref": "#/PAGE-XML/MusicRegion"
+                },
+                "AdvertRegion": {
+                    "$ref": "#/PAGE-XML/AdvertRegion"
+                },
+                "NoiseRegion": {
+                    "$ref": "#/PAGE-XML/NoiseRegion"
+                },
+                "UnkownRegion": {
+                    "$ref": "#/PAGE-XML/UnknownRegion"
+                },
+                "CustomRegion": {
+                    "$ref": "#/PAGE-XML/CustomRegion"
+                },
+                "FillColor": {
+                    "$ref": "#/Drawing/FillColor"
+                },
+                "FillOpacity": {
+                    "$ref": "#/Drawing/FillOpacity"
+                },
+                "StrokeColor": {
+                    "$ref": "#/Drawing/StrokeColor"
+                },
+                "StrokeWidth": {
+                    "$ref": "#/Drawing/StrokeWidth"
+                },
+                "StrokeOpacity": {
+                    "$ref": "#/Drawing/StrokeOpacity"
+                }
+            },
+            "additionalProperties": false
         },
         "CustomRegion": {
             "description": "CustomRegion PAGE-XML annotation",
-            "$ref": "#/PAGE-XML/Region"
+            "type": "object",
+            "properties": {
+                "TextRegion": {
+                    "$ref": "#/PAGE-XML/TextRegion"
+                },
+                "ImageRegion": {
+                    "$ref": "#/PAGE-XML/ImageRegion"
+                },
+                "LineDrawingingRegion": {
+                    "$ref": "#/PAGE-XML/LineDrawingRegion"
+                },
+                "GraphicRegion": {
+                    "$ref": "#/PAGE-XML/GraphicRegion"
+                },
+                "TableRegion": {
+                    "$ref": "#/PAGE-XML/TableRegion"
+                },
+                "ChartRegion": {
+                    "$ref": "#/PAGE-XML/ChartRegion"
+                },
+                "MapRegion": {
+                    "$ref": "#/PAGE-XML/MapRegion"
+                },
+                "SeparatorRegion": {
+                    "$ref": "#/PAGE-XML/SeparatorRegion"
+                },
+                "MathsRegion": {
+                    "$ref": "#/PAGE-XML/MathsRegion"
+                },
+                "ChemRegion": {
+                    "$ref": "#/PAGE-XML/ChemRegion"
+                },
+                "MusicRegion": {
+                    "$ref": "#/PAGE-XML/MusicRegion"
+                },
+                "AdvertRegion": {
+                    "$ref": "#/PAGE-XML/AdvertRegion"
+                },
+                "NoiseRegion": {
+                    "$ref": "#/PAGE-XML/NoiseRegion"
+                },
+                "UnkownRegion": {
+                    "$ref": "#/PAGE-XML/UnknownRegion"
+                },
+                "CustomRegion": {
+                    "$ref": "#/PAGE-XML/CustomRegion"
+                },
+                "FillColor": {
+                    "$ref": "#/Drawing/FillColor"
+                },
+                "FillOpacity": {
+                    "$ref": "#/Drawing/FillOpacity"
+                },
+                "StrokeColor": {
+                    "$ref": "#/Drawing/StrokeColor"
+                },
+                "StrokeWidth": {
+                    "$ref": "#/Drawing/StrokeWidth"
+                },
+                "StrokeOpacity": {
+                    "$ref": "#/Drawing/StrokeOpacity"
+                }
+            },
+            "additionalProperties": false
         },
         "Page": {
             "description": "Page PAGE-XML annotation",
             "type": "object",
             "properties": {
-                "PAGE-XML/Border": {
+                "Border": {
                     "$ref": "#/PAGE-XML/Border"
                 },
-                "PAGE-XML/PrintSpace": {
+                "PrintSpace": {
                     "$ref": "#/PAGE-XML/PrintSpace"
                 },
-                "PAGE-XML/TextRegion": {
+                "TextRegion": {
                     "$ref": "#/PAGE-XML/TextRegion"
                 },
-                "PAGE-XML/ImageRegion": {
+                "ImageRegion": {
                     "$ref": "#/PAGE-XML/ImageRegion"
                 },
-                "PAGE-XML/LineDrawingingRegion": {
+                "LineDrawingingRegion": {
                     "$ref": "#/PAGE-XML/LineDrawingRegion"
                 },
-                "PAGE-XML/GraphicRegion": {
+                "GraphicRegion": {
                     "$ref": "#/PAGE-XML/GraphicRegion"
                 },
-                "PAGE-XML/TableRegion": {
+                "TableRegion": {
                     "$ref": "#/PAGE-XML/TableRegion"
                 },
-                "PAGE-XML/ChartRegion": {
+                "ChartRegion": {
                     "$ref": "#/PAGE-XML/ChartRegion"
                 },
-                "PAGE-XML/MapRegion": {
+                "MapRegion": {
                     "$ref": "#/PAGE-XML/MapRegion"
                 },
-                "PAGE-XML/SeparatorRegion": {
+                "SeparatorRegion": {
                     "$ref": "#/PAGE-XML/SeparatorRegion"
                 },
-                "PAGE-XML/MathsRegion": {
+                "MathsRegion": {
                     "$ref": "#/PAGE-XML/MathsRegion"
                 },
-                "PAGE-XML/ChemRegion": {
+                "ChemRegion": {
                     "$ref": "#/PAGE-XML/ChemRegion"
                 },
-                "PAGE-XML/MusicRegion": {
+                "MusicRegion": {
                     "$ref": "#/PAGE-XML/MusicRegion"
                 },
-                "PAGE-XML/AdvertRegion": {
+                "AdvertRegion": {
                     "$ref": "#/PAGE-XML/AdvertRegion"
                 },
-                "PAGE-XML/NoiseRegion": {
+                "NoiseRegion": {
                     "$ref": "#/PAGE-XML/NoiseRegion"
                 },
-                "PAGE-XML/UnkownRegion": {
+                "UnkownRegion": {
                     "$ref": "#/PAGE-XML/UnknownRegion"
                 },
-                "PAGE-XML/CustomRegion": {
+                "CustomRegion": {
                     "$ref": "#/PAGE-XML/CustomRegion"
                 },
-                "Drawing/FillColor": {
+                "FillColor": {
                     "$ref": "#/Drawing/FillColor"
                 },
-                "Drawing/EdgeColor": {
-                    "$ref": "#/Drawing/EdgeColor"
+                "FillOpacity": {
+                    "$ref": "#/Drawing/FillOpacity"
                 },
-                "Drawing/EdgeThickness": {
-                    "$ref": "#/Drawing/EdgeThickness"
+                "StrokeColor": {
+                    "$ref": "#/Drawing/StrokeColor"
                 },
-                "Drawing/Opacity": {
-                    "$ref": "#/Drawing/Opacity"
+                "StrokeWidth": {
+                    "$ref": "#/Drawing/StrokeWidth"
+                },
+                "StrokeOpacity": {
+                    "$ref": "#/Drawing/StrokeOpacity"
                 }
             },
             "additionalProperties": false
@@ -498,7 +1454,7 @@
     },
     "type": "object",
     "properties": {
-        "PAGE-XML/Page": {
+        "Page": {
             "$ref": "#/PAGE-XML/Page"
         }
     },
