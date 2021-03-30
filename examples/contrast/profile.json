@@ -1,15 +1,17 @@
 {
-    "PAGE-XML/Page": {
-        "PAGE-XML/TextRegion": {
-            "Drawing/FillColor": "cyan",
-            "Drawing/EdgeColor": "darkblue",
-            "Drawing/EdgeThickness": 5,
-            "Drawing/Opacity": 0.3,
-            "PAGE-XML/TextLine": {
-                "Drawing/FillColor": "crimson",
-                "Drawing/EdgeColor": "darkred",
-                "Drawing/EdgeThickness": 3,
-                "Drawing/Opacity": 0.3
+    "Page": {
+        "TextRegion": {
+            "FillColor": "cyan",
+            "FillOpacity": 0.3,
+            "StrokeColor": "darkblue",
+            "StrokeWidth": 5,
+            "StrokeOpacity": 0.3,
+            "TextLine": {
+                "FillColor": "crimson",
+                "FillOpacity": 0.3,
+                "StrokeColor": "darkred",
+                "StrokeWidth": 3,
+                "StrokeOpacity": 0.3
             }
         }
     }
