@@ -104,6 +104,25 @@ def get_Page_polygon(self):
     return [x0y0, x1y0, x1y1, x0y1, x0y0]
 
 
+def get_Coords_polygon_string(self):
+    '''
+    Get polygon string from element which is parent of a Coords element
+    '''
+    return self.Coords.points.replace(' ', ',')
+
+
+def get_Page_polygon_string(self):
+    '''
+    Get polygon string from Page element (whole image)
+    '''
+    x0y0 = "0,0"
+    x1y0 = "%d,0" % self.imageWidth - 1
+    x1y1 = "%d,%d" % (self.imageWidth - 1, self.imageHeight - 1)
+    x0y1 = "0,%d" % self.imageHeight - 1
+
+    return ','.join([x0y0, x1y0, x1y1, x0y1, x0y0])
+
+
 def get_imageFilename(self):
     '''
     Get image filename from root
@@ -120,6 +139,8 @@ def make_class_names(names):
 
 get_Coords_polygon_name = "get_polygon"
 get_Page_polygon_name = "get_polygon"
+get_Coords_polygon_string_name = "get_polygon_string"
+get_Page_polygon_string_name = "get_polygon_string"
 get_imageFilename_name = "get_imageFilename"
 
 get_Coords_polygon_class_names = make_class_names(
@@ -158,6 +179,20 @@ get_Page_polygon_source = textwrap.indent(
     ),
     ' ' * 4
 )
+get_Coords_polygon_string_source = textwrap.indent(
+    inspect.getsource(get_Coords_polygon_string).replace(
+        "get_Coords_polygon_string",
+        "get_polygon_string"
+    ),
+    ' ' * 4
+)
+get_Page_polygon_string_source = textwrap.indent(
+    inspect.getsource(get_Page_polygon_string).replace(
+        "get_Page_polygon_string",
+        "get_polygon_string"
+    ),
+    ' ' * 4
+)
 get_imageFilename_source = textwrap.indent(
     inspect.getsource(get_imageFilename),
     ' ' * 4
@@ -173,6 +208,16 @@ METHOD_SPECS = (
         name=get_Page_polygon_name,
         class_names=get_Page_polygon_class_names,
         source=get_Page_polygon_source
+    ),
+    MethodSpec(
+        name=get_Coords_polygon_string_name,
+        class_names=get_Coords_polygon_class_names,
+        source=get_Coords_polygon_string_source
+    ),
+    MethodSpec(
+        name=get_Page_polygon_string_name,
+        class_names=get_Page_polygon_class_names,
+        source=get_Page_polygon_string_source
     ),
     MethodSpec(
         name=get_imageFilename_name,

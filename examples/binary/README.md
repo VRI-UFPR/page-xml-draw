@@ -15,11 +15,11 @@ $ page-xml-draw \
   --base-dir ../../assets/images
   --page \
     --fill-color black \
-    --opacity 1.0 \
+    --fill-opacity 1.0 \
     --text-region
       --text-line \
         --fill-color white \
-        --opacity 1.0
+        --fill-opacity 1.0
 ```
 
 CLI + JSON
@@ -37,13 +37,13 @@ where the content of [profile.json](profile.json) is
 
 ```json
 {
-    "PAGE-XML/Page": {
-        "Drawing/FillColor": "black",
-        "Drawing/Opacity": 1.0,
-        "PAGE-XML/TextRegion": {
-            "PAGE-XML/TextLine": {
-                "Drawing/FillColor": "white",
-                "Drawing/Opacity": 1.0
+    "Page": {
+        "FillColor": "black",
+        "FillOpacity": 1.0,
+        "TextRegion": {
+            "TextLine": {
+                "FillColor": "white",
+                "FillOpacity": 1.0
             }
         }
     }

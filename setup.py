@@ -35,5 +35,5 @@ setuptools.setup(
         "page-xml-draw=page_xml_draw:main",
       ]
     },
-    python_requires='>=3.6',
+    python_requires='>=3.7',
 )

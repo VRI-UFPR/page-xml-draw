@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/imagemapster@1.5.4/dist/jquery.imagemapster.min.js" ></script>
+
+    <body>
+        <img id="page" src="{{ image_path }}" usemap="#image-map" />
+
+        <map name="image-map" id="image-map">
+        {% for area in areas %}
+        {% for poly in area.polygons  %}
+            <area key="{{ area.key }}" alt="" title="" href="#" shape="poly" coords="{{ poly }}" />
+        {% endfor  %}
+        {% endfor  %}
+        </map>
+
+        <script>
+        function highlightOnMouseOver(data) {
+            this.highlight()
+        }
+
+        $('#page').mapster({
+            selected: true,
+            staticState: true,
+            showToolTip: true,
+            toolTipClose: ['area-mouseout'],
+            onMouseOver: highlightOnMouseOver,
+            mapKey: 'key',
+            areas: [
+                {% for area in areas %}
+                {
+                    key: '{{ area.key }}',
+                    {% if area.stroke_color %}
+                    strokeColor: '{{ area.stroke_color }}',
+                    strokeOpacity: '{{ area.stroke_opacity }}',
+                    strokeWidth: '{{ area.stroke_width }}',
+                    {% endif %}
+                    {% if area.fill_color %}
+                    fillColor: '{{ area.fill_color }}',
+                    fillOpacity: '{{ area.fill_opacity }}',
+                    {% endif %}
+                    toolTip: '{{ area.key }}'
+                },
+                {% endfor %}
+            ]
+        });
+        </script>
+    </body>
+</html>

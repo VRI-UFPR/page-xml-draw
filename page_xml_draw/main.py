@@ -1,31 +1,30 @@
-import cv2
+from pathlib import Path
 
+from page_xml_draw.struct.xml import XmlTraverser
+from page_xml_draw.struct.json import JsonInstance
 from page_xml_draw.cli import get_opts
-from page_xml_draw.gends.page import parse
-from page_xml_draw.traverser import Traverser
-from page_xml_draw.json.instance import Instance
+from page_xml_draw.core import ImageDrawer
 
 
-def main():
-    # Get options from CLI:
-    in_file, out_file, base_dir, output_format, instance = get_opts()
+def main() -> None:
+    in_file: Path
+    out_file: Path
+    base_dir: Path
+    output_format: str
+    styles: JsonInstance
+    drawer: ImageDrawer
 
-    # Parse PAGE-XML file and pass it to traverser:
-    traverser = Traverser(parse(str(in_file), silence=True), base_dir)
+    in_file, out_file, base_dir, output_format, styles = get_opts()
 
-    # Wrap JSON instance representing the profile:
-    instance = Instance(instance, traverser)
+    drawer = ImageDrawer(
+        XmlTraverser(str(in_file)),
+        styles,
+        base_dir=base_dir
+    )
+
+    drawer.traverse()
 
     if output_format == "image/png":
-        # Traverse the PAGE-XML tree and draw the annotations:
-        instance.traverse_and_draw()
-
-        # Retrieve overlay and write it to output file:
-        cv2.imwrite(str(out_file), traverser.overlay())
+        drawer.draw().save(out_file)
     elif output_format == "text/html":
-        # Traverse the PAGE-XML tree and map the annotations:
-        instance.traverse_and_map()
-
-        # Render image map ans write it to output file:
-        with out_file.open(mode='w') as fp:
-            fp.write(traverser.render())
+        drawer.map().save(out_file)

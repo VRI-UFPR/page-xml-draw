@@ -16,14 +16,16 @@ $ page-xml-draw \
   --page
     --text-region \
       --fill-color cyan \
-      --edge-color darkblue \
-      --edge-thickness 5 \
-      --opacity 0.3 \
+      --fill-opacity 0.3 \
+      --stroke-color darkblue \
+      --stroke-opacity 0.3 \
+      --stroke-width 5 \
       --text-line \
         --fill-color crimson \
-        --edge-color darkred \
-        --edge-thickness 3 \
-        --opacity 0.3
+        --fill-opacity 0.3
+        --stroke-color darkred \
+        --stroke-opacity 0.3 \
+        --stroke-width 3
 ```
 
 CLI + JSON
@@ -41,17 +43,19 @@ where the content of [profile.json](profile.json) is
 
 ```json
 {
-    "PAGE-XML/Page": {
-        "PAGE-XML/TextRegion": {
-            "Drawing/FillColor": "cyan",
-            "Drawing/EdgeColor": "darkblue",
-            "Drawing/EdgeThickness": 5,
-            "Drawing/Opacity": 0.3,
-            "PAGE-XML/TextLine": {
-                "Drawing/FillColor": "crimson",
-                "Drawing/EdgeColor": "darkred",
-                "Drawing/EdgeThickness": 3,
-                "Drawing/Opacity": 0.3
+    "Page": {
+        "TextRegion": {
+            "FillColor": "cyan",
+            "FillOpacity": 0.3,
+            "StrokeColor": "darkblue",
+            "StrokeOpacity": 0.3,
+            "StrokeWidth": 5,
+            "TextLine": {
+                "FillColor": "crimson",
+                "FillOpacity": 0.3,
+                "StrokeColor": "darkred",
+                "StrokeOpacity": 0.3,
+                "StrokeWidth": 3
             }
         }
     }

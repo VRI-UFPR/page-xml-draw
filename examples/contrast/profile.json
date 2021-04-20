@@ -4,14 +4,14 @@
             "FillColor": "cyan",
             "FillOpacity": 0.3,
             "StrokeColor": "darkblue",
-            "StrokeWidth": 5,
             "StrokeOpacity": 0.3,
+            "StrokeWidth": 5,
             "TextLine": {
                 "FillColor": "crimson",
                 "FillOpacity": 0.3,
                 "StrokeColor": "darkred",
-                "StrokeWidth": 3,
-                "StrokeOpacity": 0.3
+                "StrokeOpacity": 0.3,
+                "StrokeWidth": 3
             }
         }
     }

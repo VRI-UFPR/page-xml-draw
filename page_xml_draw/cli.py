@@ -1,10 +1,10 @@
 import os
-import pkg_resources
 import argparse
-import pathlib
-import json
 
-from page_xml_draw.json.schema import Schema
+from pathlib import Path
+from json import loads
+
+from page_xml_draw.struct.json import JsonSchema, JsonInstance
 
 
 def kebab2camel(string):
@@ -54,7 +54,7 @@ class PageXmlAction(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         # Get annotation name from kebab-case CLI option name and convert it to
         # CamelCase to match PAGE-XML format:
-        annot = "PAGE-XML/" + kebab2camel(option_string)
+        annot = kebab2camel(option_string)
 
         # Get previously declared annotation:
         _, schema, instance = namespace.stack[-1]
@@ -86,15 +86,18 @@ class DrawingAction(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):
         # Get attribute name from kebab-case CLI option name and convert it to
         # CamelCase:
-        attr = "Drawing/" + kebab2camel(option_string)
+        attr = kebab2camel(option_string)
 
         # Get previously declared annotation:
         annot, schema, instance = namespace.stack[-1]
 
         # Check is annotation supports this drawing attribute:
-        if schema.has_property(attr):
+        if schema.get_property("Style").has_property(attr):
             # Save attribute:
-            instance[attr] = values
+            if "Style" not in instance:
+                instance["Style"] = {}
+
+            instance["Style"][attr] = values
         else:
             raise argparse.ArgumentError(
                 "Annotation '%s' has no attribute '%s'" % (annot, attr)
@@ -103,15 +106,7 @@ class DrawingAction(argparse.Action):
 
 def get_opts():
     # Load schema from package files:
-    schema = Schema.from_string(
-        str(
-            pkg_resources.resource_string(
-                __name__,
-                "schema.json"
-            ),
-            'utf-8'
-        )
-    )
+    schema = JsonSchema.default()
 
     parser = argparse.ArgumentParser(
         formatter_class=lambda prog: HelpFormatter(prog)
@@ -119,7 +114,7 @@ def get_opts():
 
     parser.add_argument(
         "-i", "--input",
-        type=pathlib.Path,
+        type=Path,
         dest="input",
         required=True,
         metavar=("<path/to/file>.xml"),
@@ -128,7 +123,7 @@ def get_opts():
 
     parser.add_argument(
         "-o", "--output",
-        type=pathlib.Path,
+        type=Path,
         dest="output",
         required=True,
         metavar=("<path/to/file>.png"),
@@ -138,16 +133,16 @@ def get_opts():
 
     parser.add_argument(
         "-b", "--base-dir",
-        type=pathlib.Path,
+        type=Path,
         dest="base_dir",
-        default=pathlib.Path.cwd(),
+        default=Path.cwd(),
         metavar=("<path/to/dir>"),
         help="path to base directory relative to PAGE-XML file content"
     )
 
     parser.add_argument(
         "-p", "--profile",
-        type=pathlib.Path,
+        type=Path,
         dest="profile",
         metavar=("<path/to/file>.json"),
         help="path to pre-defined json profile describing what has to be done"
@@ -306,27 +301,35 @@ def get_opts():
     )
 
     parser.add_argument(
-        "--edge-color",
-        type=str,
-        action=DrawingAction,
-        metavar=("(<hex> | <name>)"),
-        help="draw annotation polygon edges with specified color"
-    )
-
-    parser.add_argument(
-        "--edge-thickness",
-        type=int,
-        action=DrawingAction,
-        metavar=("[0 .. +inf]"),
-        help="draw annotation polygon edges with specified thickness"
-    )
-
-    parser.add_argument(
-        "--opacity",
+        "--fill-opacity",
         type=float,
         action=DrawingAction,
         metavar=("[0.0 - 1.0]"),
-        help="draw annotation polygons with specified opacity"
+        help="fill annotation polygons with specified opacity"
+    )
+
+    parser.add_argument(
+        "--stroke-color",
+        type=str,
+        action=DrawingAction,
+        metavar=("(<hex> | <name>)"),
+        help="draw annotation polygon strokes with specified color"
+    )
+
+    parser.add_argument(
+        "--stroke-opacity",
+        type=float,
+        action=DrawingAction,
+        metavar=("[0.0 - 1.0]"),
+        help="draw annotation polygon strokes with specified opacity"
+    )
+
+    parser.add_argument(
+        "--stroke-width",
+        type=int,
+        action=DrawingAction,
+        metavar=("[0 .. +inf]"),
+        help="draw annotation polygon strokes with specified width/thickness"
     )
 
     options = parser.parse_args(namespace=Namespace(schema))
@@ -388,13 +391,15 @@ def get_opts():
     if options.html:
         output_format = "text/html"
     else:
-        output_abs = "image/png"
+        output_format = "image/png"
 
     if options.profile:
         with open(str(options.profile), 'r') as fp:
-            instance = json.loads(fp.read())
+            instance = loads(fp.read())
     else:
         instance = options.instance
+
+    instance = JsonInstance(instance)
 
     # Validate json instance against schema:
     schema.validate(instance)
