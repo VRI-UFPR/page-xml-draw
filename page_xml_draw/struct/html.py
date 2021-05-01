@@ -6,18 +6,18 @@ from jinja2 import Template
 
 class HtmlArea:
     key: str
-    polygons: str
+    polygon: str
     fill_color: str
     fill_opacity: float
     stroke_color: str
     stroke_opacity: float
     stroke_width: int
 
-    def __init__(self, key: str, polygons: str, fill_color: str,
+    def __init__(self, key: str, polygon: str, fill_color: str,
                  fill_opacity: float, stroke_color: str, stroke_opacity: float,
                  stroke_width: int) -> HtmlArea:
         self.key = key
-        self.polygons = polygons
+        self.polygon = polygon
         self.fill_color = fill_color
         self.fill_opacity = fill_opacity
         self.stroke_color = stroke_color
@@ -30,9 +30,9 @@ class HtmlMap:
     areas: list[HtmlArea]
     template: Template
 
-    def __init__(self, image_path: str, areas: list[HtmlArea] = []) -> HtmlMap:
+    def __init__(self, image_path: str) -> HtmlMap:
         self.image_path = image_path
-        self.areas = areas
+        self.areas = []
 
         string = str(resource_string(__name__, "template.html.j2"), "utf-8")
         self.template = Template(string)

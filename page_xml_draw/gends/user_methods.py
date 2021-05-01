@@ -115,10 +115,10 @@ def get_Page_polygon_string(self):
     '''
     Get polygon string from Page element (whole image)
     '''
-    x0y0 = "0,0"
-    x1y0 = "%d,0" % self.imageWidth - 1
-    x1y1 = "%d,%d" % (self.imageWidth - 1, self.imageHeight - 1)
-    x0y1 = "0,%d" % self.imageHeight - 1
+    x0y0 = '0,0'
+    x1y0 = str(self.imageWidth - 1) + ',0'
+    x1y1 = str(self.imageWidth - 1) + ',' + str(self.imageHeight - 1)
+    x0y1 = '0,' + str(self.imageHeight - 1)
 
     return ','.join([x0y0, x1y0, x1y1, x0y1, x0y0])
 
@@ -155,6 +155,22 @@ get_Coords_polygon_class_names = make_class_names(
     ]
 )
 get_Page_polygon_class_names = make_class_names(
+    [
+        "PageType"
+    ]
+)
+get_Coords_polygon_string_class_names = make_class_names(
+    [
+        "BorderType",
+        "PrintSpaceType",
+        "RegionType",
+        "TextLineType",
+        "WordType",
+        "GlyphType",
+        "GraphemeType"
+    ]
+)
+get_Page_polygon_string_class_names = make_class_names(
     [
         "PageType"
     ]
@@ -211,12 +227,12 @@ METHOD_SPECS = (
     ),
     MethodSpec(
         name=get_Coords_polygon_string_name,
-        class_names=get_Coords_polygon_class_names,
+        class_names=get_Coords_polygon_string_class_names,
         source=get_Coords_polygon_string_source
     ),
     MethodSpec(
         name=get_Page_polygon_string_name,
-        class_names=get_Page_polygon_class_names,
+        class_names=get_Page_polygon_string_class_names,
         source=get_Page_polygon_string_source
     ),
     MethodSpec(

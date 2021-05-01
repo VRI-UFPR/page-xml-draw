@@ -5,7 +5,7 @@ import cv2
 
 from pathlib import Path
 
-from page_xml_draw.struct.xml import XmlTag, XmlTraverser
+from page_xml_draw.struct.xml import XmlTraverser
 from page_xml_draw.struct.json import JsonInstance
 from page_xml_draw.struct.html import HtmlMap
 from page_xml_draw.gends.page import PcGtsType
@@ -77,20 +77,18 @@ class Drawing:
 
         self.result = image + overlay
 
+        self.result = self.result.astype(np.uint8)
+
     def save(self, output_path: Path) -> None:
         cv2.imwrite(str(output_path), self.result)
 
 
 class ImageMap:
-    def __init__(self, pcgts: PcGtsType, specs: list[StyleSpec],
-                 base_dir: Path = None) -> ImageMap:
+    def __init__(self, pcgts: PcGtsType, specs: list[StyleSpec]) -> ImageMap:
         image_path: Path
         html_map: HtmlMap
 
         image_path = Path(pcgts.get_imageFilename())
-
-        if base_dir is not None:
-            image_path = base_dir / image_path
 
         html_map = HtmlMap(image_path)
 
@@ -106,21 +104,17 @@ class ImageMap:
 
 class ImageDrawer:
     traverser: XmlTraverser
-    specs: list[StyleSpec]
-    styles: JsonInstance
     base_dir: Path
+    specs: list[StyleSpec]
 
     def __init__(self, traverser: XmlTraverser, styles: JsonInstance,
                  base_dir: Path = None) -> ImageDrawer:
         self.traverser = traverser
-        self.specs = []
-        self.styles = styles
         self.base_dir = base_dir
+        self.specs = []
+        self.traverse(styles)
 
-    def traverse(self, styles: JsonInstance = None) -> None:
-        if styles is None:
-            styles = self.styles
-
+    def traverse(self, styles: JsonInstance) -> None:
         if styles & STYLE_ATTRIBUTES:
             self.specs.append(StyleSpec(self.traverser.focused, styles))
 
@@ -133,4 +127,4 @@ class ImageDrawer:
         return Drawing(self.traverser.pcgts, self.specs, self.base_dir)
 
     def map(self) -> None:
-        return ImageMap(self.traverser.pcgts, self.specs, self.base_dir)
+        return ImageMap(self.traverser.pcgts, self.specs)

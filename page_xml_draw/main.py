@@ -22,8 +22,6 @@ def main() -> None:
         base_dir=base_dir
     )
 
-    drawer.traverse()
-
     if output_format == "image/png":
         drawer.draw().save(out_file)
     elif output_format == "text/html":

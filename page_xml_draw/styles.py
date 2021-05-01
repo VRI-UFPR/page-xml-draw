@@ -112,13 +112,19 @@ class StyleSpec:
 
     def map(self, html_map: HtmlMap) -> None:
         for elm in self.tag.elements:
+            if self.fill_color:
+                fill_color = self.fill_color.to_hashless_hex()
+
+            if self.stroke_color:
+                stroke_color = self.stroke_color.to_hashless_hex()
+
             html_map.add_area(
                 HtmlArea(
-                    self.tag.name + "," + elm.get_id(),
+                    elm.get_id(),
                     elm.get_polygon_string(),
-                    self.fill_color,
+                    fill_color,
                     self.fill_opacity,
-                    self.stroke_color,
+                    stroke_color,
                     self.stroke_opacity,
                     self.stroke_width
                 )

@@ -9,9 +9,7 @@
 
         <map name="image-map" id="image-map">
         {% for area in areas %}
-        {% for poly in area.polygons  %}
-            <area key="{{ area.key }}" alt="" title="" href="#" shape="poly" coords="{{ poly }}" />
-        {% endfor  %}
+            <area key="{{ area.key }}" alt="" title="" href="#" shape="poly" coords="{{ area.polygon }}" />
         {% endfor  %}
         </map>
 

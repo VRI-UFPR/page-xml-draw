@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Wed Feb 10 22:01:37 2021 by generateDS.py version 2.37.5.
-# Python 3.8.3 (default, Jul  2 2020, 16:21:59)  [GCC 7.3.0]
+# Generated Thu Apr 22 13:32:04 2021 by generateDS.py version 2.38.6.
+# Python 3.7.10 (default, Feb 26 2021, 18:47:35)  [GCC 7.3.0]
 #
 # Command line options:
 #   ('-o', 'page_xml_draw/gends/page.py')
@@ -13,7 +13,7 @@
 #   assets/schema/pagecontent.xsd
 #
 # Command line:
-#   /home/sulzbals/anaconda3/bin/generateDS -o "page_xml_draw/gends/page.py" --user-methods="page_xml_draw/gends/user_methods.py" assets/schema/pagecontent.xsd
+#   /home/sulzbals/anaconda3/envs/page-xml/bin/generateDS -o "page_xml_draw/gends/page.py" --user-methods="page_xml_draw/gends/user_methods.py" assets/schema/pagecontent.xsd
 #
 # Current working directory (os.getcwd()):
 #   page_xml_draw
@@ -215,6 +215,8 @@ except ModulenotfoundExp_ as exp:
                 raise_parse_error(node, 'Requires integer value')
             return value
         def gds_format_integer_list(self, input_data, input_name=''):
+            if len(input_data) > 0 and not isinstance(input_data[0], BaseStrType_):
+                input_data = [str(s) for s in input_data]
             return '%s' % ' '.join(input_data)
         def gds_validate_integer_list(
                 self, input_data, node=None, input_name=''):
@@ -223,7 +225,7 @@ except ModulenotfoundExp_ as exp:
                 try:
                     int(value)
                 except (TypeError, ValueError):
-                    raise_parse_error(node, 'Requires sequence of integer valuess')
+                    raise_parse_error(node, 'Requires sequence of integer values')
             return values
         def gds_format_float(self, input_data, input_name=''):
             return ('%.15f' % input_data).rstrip('0')
@@ -240,6 +242,8 @@ except ModulenotfoundExp_ as exp:
                 raise_parse_error(node, 'Requires float value')
             return value
         def gds_format_float_list(self, input_data, input_name=''):
+            if len(input_data) > 0 and not isinstance(input_data[0], BaseStrType_):
+                input_data = [str(s) for s in input_data]
             return '%s' % ' '.join(input_data)
         def gds_validate_float_list(
                 self, input_data, node=None, input_name=''):
@@ -270,6 +274,8 @@ except ModulenotfoundExp_ as exp:
                 raise_parse_error(node, 'Requires decimal value')
             return value
         def gds_format_decimal_list(self, input_data, input_name=''):
+            if len(input_data) > 0 and not isinstance(input_data[0], BaseStrType_):
+                input_data = [str(s) for s in input_data]
             return ' '.join([self.gds_format_decimal(item) for item in input_data])
         def gds_validate_decimal_list(
                 self, input_data, node=None, input_name=''):
@@ -281,7 +287,7 @@ except ModulenotfoundExp_ as exp:
                     raise_parse_error(node, 'Requires sequence of decimal values')
             return values
         def gds_format_double(self, input_data, input_name=''):
-            return '%e' % input_data
+            return '%s' % input_data
         def gds_parse_double(self, input_data, node=None, input_name=''):
             try:
                 fval_ = float(input_data)
@@ -295,6 +301,8 @@ except ModulenotfoundExp_ as exp:
                 raise_parse_error(node, 'Requires double or float value')
             return value
         def gds_format_double_list(self, input_data, input_name=''):
+            if len(input_data) > 0 and not isinstance(input_data[0], BaseStrType_):
+                input_data = [str(s) for s in input_data]
             return '%s' % ' '.join(input_data)
         def gds_validate_double_list(
                 self, input_data, node=None, input_name=''):
@@ -324,11 +332,14 @@ except ModulenotfoundExp_ as exp:
                     '(one of True, 1, False, 0)')
             return input_data
         def gds_format_boolean_list(self, input_data, input_name=''):
+            if len(input_data) > 0 and not isinstance(input_data[0], BaseStrType_):
+                input_data = [str(s) for s in input_data]
             return '%s' % ' '.join(input_data)
         def gds_validate_boolean_list(
                 self, input_data, node=None, input_name=''):
             values = input_data.split()
             for value in values:
+                value = self.gds_parse_boolean(value, node, input_name)
                 if value not in (True, 1, False, 0, ):
                     raise_parse_error(
                         node,
@@ -775,7 +786,10 @@ def find_attr_value_(attr_name, node):
         value = attrs.get(attr_name)
     elif len(attr_parts) == 2:
         prefix, name = attr_parts
-        namespace = node.nsmap.get(prefix)
+        if prefix == 'xml':
+            namespace = 'http://www.w3.org/XML/1998/namespace'
+        else:
+            namespace = node.nsmap.get(prefix)
         if namespace is not None:
             value = attrs.get('{%s}%s' % (namespace, name, ))
     return value
@@ -1521,13 +1535,13 @@ class PcGtsType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.pcGtsId = _cast(None, pcGtsId)
         self.pcGtsId_nsprefix_ = None
         self.Metadata = Metadata
-        self.Metadata_nsprefix_ = None
+        self.Metadata_nsprefix_ = "pc"
         self.Page = Page
-        self.Page_nsprefix_ = None
+        self.Page_nsprefix_ = "pc"
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -1675,12 +1689,12 @@ class MetadataType(GeneratedsSuper):
         self.Comments = Comments
         self.Comments_nsprefix_ = None
         self.UserDefined = UserDefined
-        self.UserDefined_nsprefix_ = None
+        self.UserDefined_nsprefix_ = "pc"
         if MetadataItem is None:
             self.MetadataItem = []
         else:
             self.MetadataItem = MetadataItem
-        self.MetadataItem_nsprefix_ = None
+        self.MetadataItem_nsprefix_ = "pc"
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -1867,7 +1881,7 @@ class MetadataItemType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.type_ = _cast(None, type_)
         self.type__nsprefix_ = None
         self.name = _cast(None, name)
@@ -1883,7 +1897,7 @@ class MetadataItemType(GeneratedsSuper):
             self.Labels = []
         else:
             self.Labels = Labels
-        self.Labels_nsprefix_ = None
+        self.Labels_nsprefix_ = "pc"
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -2050,7 +2064,7 @@ class LabelsType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.externalModel = _cast(None, externalModel)
         self.externalModel_nsprefix_ = None
         self.externalId = _cast(None, externalId)
@@ -2063,7 +2077,7 @@ class LabelsType(GeneratedsSuper):
             self.Label = []
         else:
             self.Label = Label
-        self.Label_nsprefix_ = None
+        self.Label_nsprefix_ = "pc"
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -2214,7 +2228,7 @@ class LabelType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.value = _cast(None, value)
         self.value_nsprefix_ = None
         self.type_ = _cast(None, type_)
@@ -2402,7 +2416,7 @@ class PageType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.imageFilename = _cast(None, imageFilename)
         self.imageFilename_nsprefix_ = None
         self.imageWidth = _cast(int, imageWidth)
@@ -2439,101 +2453,101 @@ class PageType(GeneratedsSuper):
             self.AlternativeImage = []
         else:
             self.AlternativeImage = AlternativeImage
-        self.AlternativeImage_nsprefix_ = None
+        self.AlternativeImage_nsprefix_ = "pc"
         self.Border = Border
-        self.Border_nsprefix_ = None
+        self.Border_nsprefix_ = "pc"
         self.PrintSpace = PrintSpace
-        self.PrintSpace_nsprefix_ = None
+        self.PrintSpace_nsprefix_ = "pc"
         self.ReadingOrder = ReadingOrder
-        self.ReadingOrder_nsprefix_ = None
+        self.ReadingOrder_nsprefix_ = "pc"
         self.Layers = Layers
-        self.Layers_nsprefix_ = None
+        self.Layers_nsprefix_ = "pc"
         self.Relations = Relations
-        self.Relations_nsprefix_ = None
+        self.Relations_nsprefix_ = "pc"
         self.TextStyle = TextStyle
-        self.TextStyle_nsprefix_ = None
+        self.TextStyle_nsprefix_ = "pc"
         self.UserDefined = UserDefined
-        self.UserDefined_nsprefix_ = None
+        self.UserDefined_nsprefix_ = "pc"
         if Labels is None:
             self.Labels = []
         else:
             self.Labels = Labels
-        self.Labels_nsprefix_ = None
+        self.Labels_nsprefix_ = "pc"
         if TextRegion is None:
             self.TextRegion = []
         else:
             self.TextRegion = TextRegion
-        self.TextRegion_nsprefix_ = None
+        self.TextRegion_nsprefix_ = "pc"
         if ImageRegion is None:
             self.ImageRegion = []
         else:
             self.ImageRegion = ImageRegion
-        self.ImageRegion_nsprefix_ = None
+        self.ImageRegion_nsprefix_ = "pc"
         if LineDrawingRegion is None:
             self.LineDrawingRegion = []
         else:
             self.LineDrawingRegion = LineDrawingRegion
-        self.LineDrawingRegion_nsprefix_ = None
+        self.LineDrawingRegion_nsprefix_ = "pc"
         if GraphicRegion is None:
             self.GraphicRegion = []
         else:
             self.GraphicRegion = GraphicRegion
-        self.GraphicRegion_nsprefix_ = None
+        self.GraphicRegion_nsprefix_ = "pc"
         if TableRegion is None:
             self.TableRegion = []
         else:
             self.TableRegion = TableRegion
-        self.TableRegion_nsprefix_ = None
+        self.TableRegion_nsprefix_ = "pc"
         if ChartRegion is None:
             self.ChartRegion = []
         else:
             self.ChartRegion = ChartRegion
-        self.ChartRegion_nsprefix_ = None
+        self.ChartRegion_nsprefix_ = "pc"
         if MapRegion is None:
             self.MapRegion = []
         else:
             self.MapRegion = MapRegion
-        self.MapRegion_nsprefix_ = None
+        self.MapRegion_nsprefix_ = "pc"
         if SeparatorRegion is None:
             self.SeparatorRegion = []
         else:
             self.SeparatorRegion = SeparatorRegion
-        self.SeparatorRegion_nsprefix_ = None
+        self.SeparatorRegion_nsprefix_ = "pc"
         if MathsRegion is None:
             self.MathsRegion = []
         else:
             self.MathsRegion = MathsRegion
-        self.MathsRegion_nsprefix_ = None
+        self.MathsRegion_nsprefix_ = "pc"
         if ChemRegion is None:
             self.ChemRegion = []
         else:
             self.ChemRegion = ChemRegion
-        self.ChemRegion_nsprefix_ = None
+        self.ChemRegion_nsprefix_ = "pc"
         if MusicRegion is None:
             self.MusicRegion = []
         else:
             self.MusicRegion = MusicRegion
-        self.MusicRegion_nsprefix_ = None
+        self.MusicRegion_nsprefix_ = "pc"
         if AdvertRegion is None:
             self.AdvertRegion = []
         else:
             self.AdvertRegion = AdvertRegion
-        self.AdvertRegion_nsprefix_ = None
+        self.AdvertRegion_nsprefix_ = "pc"
         if NoiseRegion is None:
             self.NoiseRegion = []
         else:
             self.NoiseRegion = NoiseRegion
-        self.NoiseRegion_nsprefix_ = None
+        self.NoiseRegion_nsprefix_ = "pc"
         if UnknownRegion is None:
             self.UnknownRegion = []
         else:
             self.UnknownRegion = UnknownRegion
-        self.UnknownRegion_nsprefix_ = None
+        self.UnknownRegion_nsprefix_ = "pc"
         if CustomRegion is None:
             self.CustomRegion = []
         else:
             self.CustomRegion = CustomRegion
-        self.CustomRegion_nsprefix_ = None
+        self.CustomRegion_nsprefix_ = "pc"
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -3303,6 +3317,16 @@ class PageType(GeneratedsSuper):
         x0y1 = [0, self.imageHeight - 1]
 
         return [x0y0, x1y0, x1y1, x0y1, x0y0]
+    def get_polygon_string(self):
+        '''
+        Get polygon string from Page element (whole image)
+        '''
+        x0y0 = '0,0'
+        x1y0 = str(self.imageWidth - 1) + ',0'
+        x1y1 = str(self.imageWidth - 1) + ',' + str(self.imageHeight - 1)
+        x0y1 = '0,' + str(self.imageHeight - 1)
+
+        return ','.join([x0y0, x1y0, x1y1, x0y1, x0y0])
 # end class PageType
 
 
@@ -3327,7 +3351,7 @@ class CoordsType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.points = _cast(None, points)
         self.points_nsprefix_ = None
         self.conf = _cast(float, conf)
@@ -3486,7 +3510,7 @@ class TextLineType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.id = _cast(None, id)
         self.id_nsprefix_ = None
         self.primaryLanguage = _cast(None, primaryLanguage)
@@ -3509,30 +3533,30 @@ class TextLineType(GeneratedsSuper):
             self.AlternativeImage = []
         else:
             self.AlternativeImage = AlternativeImage
-        self.AlternativeImage_nsprefix_ = None
+        self.AlternativeImage_nsprefix_ = "pc"
         self.Coords = Coords
-        self.Coords_nsprefix_ = None
+        self.Coords_nsprefix_ = "pc"
         self.Baseline = Baseline
-        self.Baseline_nsprefix_ = None
+        self.Baseline_nsprefix_ = "pc"
         if Word is None:
             self.Word = []
         else:
             self.Word = Word
-        self.Word_nsprefix_ = None
+        self.Word_nsprefix_ = "pc"
         if TextEquiv is None:
             self.TextEquiv = []
         else:
             self.TextEquiv = TextEquiv
-        self.TextEquiv_nsprefix_ = None
+        self.TextEquiv_nsprefix_ = "pc"
         self.TextStyle = TextStyle
-        self.TextStyle_nsprefix_ = None
+        self.TextStyle_nsprefix_ = "pc"
         self.UserDefined = UserDefined
-        self.UserDefined_nsprefix_ = None
+        self.UserDefined_nsprefix_ = "pc"
         if Labels is None:
             self.Labels = []
         else:
             self.Labels = Labels
-        self.Labels_nsprefix_ = None
+        self.Labels_nsprefix_ = "pc"
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -3886,6 +3910,11 @@ class TextLineType(GeneratedsSuper):
         '''
         points = [point for point in self.Coords.points.split(' ')]
         return [[int(coord) for coord in point.split(',')] for point in points]
+    def get_polygon_string(self):
+        '''
+        Get polygon string from element which is parent of a Coords element
+        '''
+        return self.Coords.points.replace(' ', ',')
 # end class TextLineType
 
 
@@ -3924,7 +3953,7 @@ class WordType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.id = _cast(None, id)
         self.id_nsprefix_ = None
         self.language = _cast(None, language)
@@ -3945,28 +3974,28 @@ class WordType(GeneratedsSuper):
             self.AlternativeImage = []
         else:
             self.AlternativeImage = AlternativeImage
-        self.AlternativeImage_nsprefix_ = None
+        self.AlternativeImage_nsprefix_ = "pc"
         self.Coords = Coords
-        self.Coords_nsprefix_ = None
+        self.Coords_nsprefix_ = "pc"
         if Glyph is None:
             self.Glyph = []
         else:
             self.Glyph = Glyph
-        self.Glyph_nsprefix_ = None
+        self.Glyph_nsprefix_ = "pc"
         if TextEquiv is None:
             self.TextEquiv = []
         else:
             self.TextEquiv = TextEquiv
-        self.TextEquiv_nsprefix_ = None
+        self.TextEquiv_nsprefix_ = "pc"
         self.TextStyle = TextStyle
-        self.TextStyle_nsprefix_ = None
+        self.TextStyle_nsprefix_ = "pc"
         self.UserDefined = UserDefined
-        self.UserDefined_nsprefix_ = None
+        self.UserDefined_nsprefix_ = "pc"
         if Labels is None:
             self.Labels = []
         else:
             self.Labels = Labels
-        self.Labels_nsprefix_ = None
+        self.Labels_nsprefix_ = "pc"
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -4296,6 +4325,11 @@ class WordType(GeneratedsSuper):
         '''
         points = [point for point in self.Coords.points.split(' ')]
         return [[int(coord) for coord in point.split(',')] for point in points]
+    def get_polygon_string(self):
+        '''
+        Get polygon string from element which is parent of a Coords element
+        '''
+        return self.Coords.points.replace(' ', ',')
 # end class WordType
 
 
@@ -4328,7 +4362,7 @@ class GlyphType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.id = _cast(None, id)
         self.id_nsprefix_ = None
         self.ligature = _cast(bool, ligature)
@@ -4347,25 +4381,25 @@ class GlyphType(GeneratedsSuper):
             self.AlternativeImage = []
         else:
             self.AlternativeImage = AlternativeImage
-        self.AlternativeImage_nsprefix_ = None
+        self.AlternativeImage_nsprefix_ = "pc"
         self.Coords = Coords
-        self.Coords_nsprefix_ = None
+        self.Coords_nsprefix_ = "pc"
         self.Graphemes = Graphemes
-        self.Graphemes_nsprefix_ = None
+        self.Graphemes_nsprefix_ = "pc"
         if TextEquiv is None:
             self.TextEquiv = []
         else:
             self.TextEquiv = TextEquiv
-        self.TextEquiv_nsprefix_ = None
+        self.TextEquiv_nsprefix_ = "pc"
         self.TextStyle = TextStyle
-        self.TextStyle_nsprefix_ = None
+        self.TextStyle_nsprefix_ = "pc"
         self.UserDefined = UserDefined
-        self.UserDefined_nsprefix_ = None
+        self.UserDefined_nsprefix_ = "pc"
         if Labels is None:
             self.Labels = []
         else:
             self.Labels = Labels
-        self.Labels_nsprefix_ = None
+        self.Labels_nsprefix_ = "pc"
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -4659,6 +4693,11 @@ class GlyphType(GeneratedsSuper):
         '''
         points = [point for point in self.Coords.points.split(' ')]
         return [[int(coord) for coord in point.split(',')] for point in points]
+    def get_polygon_string(self):
+        '''
+        Get polygon string from element which is parent of a Coords element
+        '''
+        return self.Coords.points.replace(' ', ',')
 # end class GlyphType
 
 
@@ -4911,12 +4950,12 @@ class GridType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         if GridPoints is None:
             self.GridPoints = []
         else:
             self.GridPoints = GridPoints
-        self.GridPoints_nsprefix_ = None
+        self.GridPoints_nsprefix_ = "pc"
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -5019,7 +5058,7 @@ class GridPointsType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.index = _cast(int, index)
         self.index_nsprefix_ = None
         self.points = _cast(None, points)
@@ -5141,9 +5180,9 @@ class PrintSpaceType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.Coords = Coords
-        self.Coords_nsprefix_ = None
+        self.Coords_nsprefix_ = "pc"
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -5228,6 +5267,11 @@ class PrintSpaceType(GeneratedsSuper):
         '''
         points = [point for point in self.Coords.points.split(' ')]
         return [[int(coord) for coord in point.split(',')] for point in points]
+    def get_polygon_string(self):
+        '''
+        Get polygon string from element which is parent of a Coords element
+        '''
+        return self.Coords.points.replace(' ', ',')
 # end class PrintSpaceType
 
 
@@ -5250,13 +5294,13 @@ class ReadingOrderType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.conf = _cast(float, conf)
         self.conf_nsprefix_ = None
         self.OrderedGroup = OrderedGroup
-        self.OrderedGroup_nsprefix_ = None
+        self.OrderedGroup_nsprefix_ = "pc"
         self.UnorderedGroup = UnorderedGroup
-        self.UnorderedGroup_nsprefix_ = None
+        self.UnorderedGroup_nsprefix_ = "pc"
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -5392,7 +5436,7 @@ class RegionRefIndexedType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.index = _cast(int, index)
         self.index_nsprefix_ = None
         self.regionRef = _cast(None, regionRef)
@@ -5516,7 +5560,7 @@ class OrderedGroupIndexedType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.id = _cast(None, id)
         self.id_nsprefix_ = None
         self.regionRef = _cast(None, regionRef)
@@ -5534,27 +5578,27 @@ class OrderedGroupIndexedType(GeneratedsSuper):
         self.comments = _cast(None, comments)
         self.comments_nsprefix_ = None
         self.UserDefined = UserDefined
-        self.UserDefined_nsprefix_ = None
+        self.UserDefined_nsprefix_ = "pc"
         if Labels is None:
             self.Labels = []
         else:
             self.Labels = Labels
-        self.Labels_nsprefix_ = None
+        self.Labels_nsprefix_ = "pc"
         if RegionRefIndexed is None:
             self.RegionRefIndexed = []
         else:
             self.RegionRefIndexed = RegionRefIndexed
-        self.RegionRefIndexed_nsprefix_ = None
+        self.RegionRefIndexed_nsprefix_ = "pc"
         if OrderedGroupIndexed is None:
             self.OrderedGroupIndexed = []
         else:
             self.OrderedGroupIndexed = OrderedGroupIndexed
-        self.OrderedGroupIndexed_nsprefix_ = None
+        self.OrderedGroupIndexed_nsprefix_ = "pc"
         if UnorderedGroupIndexed is None:
             self.UnorderedGroupIndexed = []
         else:
             self.UnorderedGroupIndexed = UnorderedGroupIndexed
-        self.UnorderedGroupIndexed_nsprefix_ = None
+        self.UnorderedGroupIndexed_nsprefix_ = "pc"
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -5850,7 +5894,7 @@ class UnorderedGroupIndexedType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.id = _cast(None, id)
         self.id_nsprefix_ = None
         self.regionRef = _cast(None, regionRef)
@@ -5868,27 +5912,27 @@ class UnorderedGroupIndexedType(GeneratedsSuper):
         self.comments = _cast(None, comments)
         self.comments_nsprefix_ = None
         self.UserDefined = UserDefined
-        self.UserDefined_nsprefix_ = None
+        self.UserDefined_nsprefix_ = "pc"
         if Labels is None:
             self.Labels = []
         else:
             self.Labels = Labels
-        self.Labels_nsprefix_ = None
+        self.Labels_nsprefix_ = "pc"
         if RegionRef is None:
             self.RegionRef = []
         else:
             self.RegionRef = RegionRef
-        self.RegionRef_nsprefix_ = None
+        self.RegionRef_nsprefix_ = "pc"
         if OrderedGroup is None:
             self.OrderedGroup = []
         else:
             self.OrderedGroup = OrderedGroup
-        self.OrderedGroup_nsprefix_ = None
+        self.OrderedGroup_nsprefix_ = "pc"
         if UnorderedGroup is None:
             self.UnorderedGroup = []
         else:
             self.UnorderedGroup = UnorderedGroup
-        self.UnorderedGroup_nsprefix_ = None
+        self.UnorderedGroup_nsprefix_ = "pc"
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -6163,7 +6207,7 @@ class RegionRefType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.regionRef = _cast(None, regionRef)
         self.regionRef_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -6271,7 +6315,7 @@ class OrderedGroupType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.id = _cast(None, id)
         self.id_nsprefix_ = None
         self.regionRef = _cast(None, regionRef)
@@ -6287,27 +6331,27 @@ class OrderedGroupType(GeneratedsSuper):
         self.comments = _cast(None, comments)
         self.comments_nsprefix_ = None
         self.UserDefined = UserDefined
-        self.UserDefined_nsprefix_ = None
+        self.UserDefined_nsprefix_ = "pc"
         if Labels is None:
             self.Labels = []
         else:
             self.Labels = Labels
-        self.Labels_nsprefix_ = None
+        self.Labels_nsprefix_ = "pc"
         if RegionRefIndexed is None:
             self.RegionRefIndexed = []
         else:
             self.RegionRefIndexed = RegionRefIndexed
-        self.RegionRefIndexed_nsprefix_ = None
+        self.RegionRefIndexed_nsprefix_ = "pc"
         if OrderedGroupIndexed is None:
             self.OrderedGroupIndexed = []
         else:
             self.OrderedGroupIndexed = OrderedGroupIndexed
-        self.OrderedGroupIndexed_nsprefix_ = None
+        self.OrderedGroupIndexed_nsprefix_ = "pc"
         if UnorderedGroupIndexed is None:
             self.UnorderedGroupIndexed = []
         else:
             self.UnorderedGroupIndexed = UnorderedGroupIndexed
-        self.UnorderedGroupIndexed_nsprefix_ = None
+        self.UnorderedGroupIndexed_nsprefix_ = "pc"
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -6589,7 +6633,7 @@ class UnorderedGroupType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.id = _cast(None, id)
         self.id_nsprefix_ = None
         self.regionRef = _cast(None, regionRef)
@@ -6605,27 +6649,27 @@ class UnorderedGroupType(GeneratedsSuper):
         self.comments = _cast(None, comments)
         self.comments_nsprefix_ = None
         self.UserDefined = UserDefined
-        self.UserDefined_nsprefix_ = None
+        self.UserDefined_nsprefix_ = "pc"
         if Labels is None:
             self.Labels = []
         else:
             self.Labels = Labels
-        self.Labels_nsprefix_ = None
+        self.Labels_nsprefix_ = "pc"
         if RegionRef is None:
             self.RegionRef = []
         else:
             self.RegionRef = RegionRef
-        self.RegionRef_nsprefix_ = None
+        self.RegionRef_nsprefix_ = "pc"
         if OrderedGroup is None:
             self.OrderedGroup = []
         else:
             self.OrderedGroup = OrderedGroup
-        self.OrderedGroup_nsprefix_ = None
+        self.OrderedGroup_nsprefix_ = "pc"
         if UnorderedGroup is None:
             self.UnorderedGroup = []
         else:
             self.UnorderedGroup = UnorderedGroup
-        self.UnorderedGroup_nsprefix_ = None
+        self.UnorderedGroup_nsprefix_ = "pc"
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -6891,9 +6935,9 @@ class BorderType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.Coords = Coords
-        self.Coords_nsprefix_ = None
+        self.Coords_nsprefix_ = "pc"
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -6978,6 +7022,11 @@ class BorderType(GeneratedsSuper):
         '''
         points = [point for point in self.Coords.points.split(' ')]
         return [[int(coord) for coord in point.split(',')] for point in points]
+    def get_polygon_string(self):
+        '''
+        Get polygon string from element which is parent of a Coords element
+        '''
+        return self.Coords.points.replace(' ', ',')
 # end class BorderType
 
 
@@ -6996,12 +7045,12 @@ class LayersType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         if Layer is None:
             self.Layer = []
         else:
             self.Layer = Layer
-        self.Layer_nsprefix_ = None
+        self.Layer_nsprefix_ = "pc"
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -7104,7 +7153,7 @@ class LayerType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.id = _cast(None, id)
         self.id_nsprefix_ = None
         self.zIndex = _cast(int, zIndex)
@@ -7115,7 +7164,7 @@ class LayerType(GeneratedsSuper):
             self.RegionRef = []
         else:
             self.RegionRef = RegionRef
-        self.RegionRef_nsprefix_ = None
+        self.RegionRef_nsprefix_ = "pc"
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -7248,7 +7297,7 @@ class BaselineType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.points = _cast(None, points)
         self.points_nsprefix_ = None
         self.conf = _cast(float, conf)
@@ -7383,12 +7432,12 @@ class RelationsType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         if Relation is None:
             self.Relation = []
         else:
             self.Relation = Relation
-        self.Relation_nsprefix_ = None
+        self.Relation_nsprefix_ = "pc"
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -7509,7 +7558,7 @@ class RelationType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.id = _cast(None, id)
         self.id_nsprefix_ = None
         self.type_ = _cast(None, type_)
@@ -7522,11 +7571,11 @@ class RelationType(GeneratedsSuper):
             self.Labels = []
         else:
             self.Labels = Labels
-        self.Labels_nsprefix_ = None
+        self.Labels_nsprefix_ = "pc"
         self.SourceRegionRef = SourceRegionRef
-        self.SourceRegionRef_nsprefix_ = None
+        self.SourceRegionRef_nsprefix_ = "pc"
         self.TargetRegionRef = TargetRegionRef
-        self.TargetRegionRef_nsprefix_ = None
+        self.TargetRegionRef_nsprefix_ = "pc"
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -7748,7 +7797,7 @@ class TextStyleType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.fontFamily = _cast(None, fontFamily)
         self.fontFamily_nsprefix_ = None
         self.serif = _cast(bool, serif)
@@ -8195,7 +8244,7 @@ class RegionType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.id = _cast(None, id)
         self.id_nsprefix_ = None
         self.custom = _cast(None, custom)
@@ -8208,88 +8257,88 @@ class RegionType(GeneratedsSuper):
             self.AlternativeImage = []
         else:
             self.AlternativeImage = AlternativeImage
-        self.AlternativeImage_nsprefix_ = None
+        self.AlternativeImage_nsprefix_ = "pc"
         self.Coords = Coords
-        self.Coords_nsprefix_ = None
+        self.Coords_nsprefix_ = "pc"
         self.UserDefined = UserDefined
-        self.UserDefined_nsprefix_ = None
+        self.UserDefined_nsprefix_ = "pc"
         if Labels is None:
             self.Labels = []
         else:
             self.Labels = Labels
-        self.Labels_nsprefix_ = None
+        self.Labels_nsprefix_ = "pc"
         self.Roles = Roles
-        self.Roles_nsprefix_ = None
+        self.Roles_nsprefix_ = "pc"
         if TextRegion is None:
             self.TextRegion = []
         else:
             self.TextRegion = TextRegion
-        self.TextRegion_nsprefix_ = None
+        self.TextRegion_nsprefix_ = "pc"
         if ImageRegion is None:
             self.ImageRegion = []
         else:
             self.ImageRegion = ImageRegion
-        self.ImageRegion_nsprefix_ = None
+        self.ImageRegion_nsprefix_ = "pc"
         if LineDrawingRegion is None:
             self.LineDrawingRegion = []
         else:
             self.LineDrawingRegion = LineDrawingRegion
-        self.LineDrawingRegion_nsprefix_ = None
+        self.LineDrawingRegion_nsprefix_ = "pc"
         if GraphicRegion is None:
             self.GraphicRegion = []
         else:
             self.GraphicRegion = GraphicRegion
-        self.GraphicRegion_nsprefix_ = None
+        self.GraphicRegion_nsprefix_ = "pc"
         if TableRegion is None:
             self.TableRegion = []
         else:
             self.TableRegion = TableRegion
-        self.TableRegion_nsprefix_ = None
+        self.TableRegion_nsprefix_ = "pc"
         if ChartRegion is None:
             self.ChartRegion = []
         else:
             self.ChartRegion = ChartRegion
-        self.ChartRegion_nsprefix_ = None
+        self.ChartRegion_nsprefix_ = "pc"
         if SeparatorRegion is None:
             self.SeparatorRegion = []
         else:
             self.SeparatorRegion = SeparatorRegion
-        self.SeparatorRegion_nsprefix_ = None
+        self.SeparatorRegion_nsprefix_ = "pc"
         if MathsRegion is None:
             self.MathsRegion = []
         else:
             self.MathsRegion = MathsRegion
-        self.MathsRegion_nsprefix_ = None
+        self.MathsRegion_nsprefix_ = "pc"
         if ChemRegion is None:
             self.ChemRegion = []
         else:
             self.ChemRegion = ChemRegion
-        self.ChemRegion_nsprefix_ = None
+        self.ChemRegion_nsprefix_ = "pc"
         if MusicRegion is None:
             self.MusicRegion = []
         else:
             self.MusicRegion = MusicRegion
-        self.MusicRegion_nsprefix_ = None
+        self.MusicRegion_nsprefix_ = "pc"
         if AdvertRegion is None:
             self.AdvertRegion = []
         else:
             self.AdvertRegion = AdvertRegion
-        self.AdvertRegion_nsprefix_ = None
+        self.AdvertRegion_nsprefix_ = "pc"
         if NoiseRegion is None:
             self.NoiseRegion = []
         else:
             self.NoiseRegion = NoiseRegion
-        self.NoiseRegion_nsprefix_ = None
+        self.NoiseRegion_nsprefix_ = "pc"
         if UnknownRegion is None:
             self.UnknownRegion = []
         else:
             self.UnknownRegion = UnknownRegion
-        self.UnknownRegion_nsprefix_ = None
+        self.UnknownRegion_nsprefix_ = "pc"
         if CustomRegion is None:
             self.CustomRegion = []
         else:
             self.CustomRegion = CustomRegion
-        self.CustomRegion_nsprefix_ = None
+        self.CustomRegion_nsprefix_ = "pc"
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -8766,6 +8815,11 @@ class RegionType(GeneratedsSuper):
         '''
         points = [point for point in self.Coords.points.split(' ')]
         return [[int(coord) for coord in point.split(',')] for point in points]
+    def get_polygon_string(self):
+        '''
+        Get polygon string from element which is parent of a Coords element
+        '''
+        return self.Coords.points.replace(' ', ',')
 # end class RegionType
 
 
@@ -8784,7 +8838,7 @@ class AlternativeImageType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.filename = _cast(None, filename)
         self.filename_nsprefix_ = None
         self.comments = _cast(None, comments)
@@ -8921,22 +8975,22 @@ class GraphemesType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         if Grapheme is None:
             self.Grapheme = []
         else:
             self.Grapheme = Grapheme
-        self.Grapheme_nsprefix_ = None
+        self.Grapheme_nsprefix_ = "pc"
         if NonPrintingChar is None:
             self.NonPrintingChar = []
         else:
             self.NonPrintingChar = NonPrintingChar
-        self.NonPrintingChar_nsprefix_ = None
+        self.NonPrintingChar_nsprefix_ = "pc"
         if GraphemeGroup is None:
             self.GraphemeGroup = []
         else:
             self.GraphemeGroup = GraphemeGroup
-        self.GraphemeGroup_nsprefix_ = None
+        self.GraphemeGroup_nsprefix_ = "pc"
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -9086,7 +9140,7 @@ class GraphemeBaseType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.id = _cast(None, id)
         self.id_nsprefix_ = None
         self.index = _cast(int, index)
@@ -9103,7 +9157,7 @@ class GraphemeBaseType(GeneratedsSuper):
             self.TextEquiv = []
         else:
             self.TextEquiv = TextEquiv
-        self.TextEquiv_nsprefix_ = None
+        self.TextEquiv_nsprefix_ = "pc"
         self.extensiontype_ = extensiontype_
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
@@ -9316,10 +9370,10 @@ class GraphemeType(GraphemeBaseType):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        super(GraphemeType, self).__init__(id, index, ligature, charType, custom, comments, TextEquiv,  **kwargs_)
+        self.ns_prefix_ = "pc"
+        super(globals().get("GraphemeType"), self).__init__(id, index, ligature, charType, custom, comments, TextEquiv,  **kwargs_)
         self.Coords = Coords
-        self.Coords_nsprefix_ = None
+        self.Coords_nsprefix_ = "pc"
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -9407,6 +9461,11 @@ class GraphemeType(GraphemeBaseType):
         '''
         points = [point for point in self.Coords.points.split(' ')]
         return [[int(coord) for coord in point.split(',')] for point in points]
+    def get_polygon_string(self):
+        '''
+        Get polygon string from element which is parent of a Coords element
+        '''
+        return self.Coords.points.replace(' ', ',')
 # end class GraphemeType
 
 
@@ -9425,8 +9484,8 @@ class NonPrintingCharType(GraphemeBaseType):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        super(NonPrintingCharType, self).__init__(id, index, ligature, charType, custom, comments, TextEquiv,  **kwargs_)
+        self.ns_prefix_ = "pc"
+        super(globals().get("NonPrintingCharType"), self).__init__(id, index, ligature, charType, custom, comments, TextEquiv,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -9508,18 +9567,18 @@ class GraphemeGroupType(GraphemeBaseType):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        super(GraphemeGroupType, self).__init__(id, index, ligature, charType, custom, comments, TextEquiv,  **kwargs_)
+        self.ns_prefix_ = "pc"
+        super(globals().get("GraphemeGroupType"), self).__init__(id, index, ligature, charType, custom, comments, TextEquiv,  **kwargs_)
         if Grapheme is None:
             self.Grapheme = []
         else:
             self.Grapheme = Grapheme
-        self.Grapheme_nsprefix_ = None
+        self.Grapheme_nsprefix_ = "pc"
         if NonPrintingChar is None:
             self.NonPrintingChar = []
         else:
             self.NonPrintingChar = NonPrintingChar
-        self.NonPrintingChar_nsprefix_ = None
+        self.NonPrintingChar_nsprefix_ = "pc"
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -9642,12 +9701,12 @@ class UserDefinedType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         if UserAttribute is None:
             self.UserAttribute = []
         else:
             self.UserAttribute = UserAttribute
-        self.UserAttribute_nsprefix_ = None
+        self.UserAttribute_nsprefix_ = "pc"
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -9751,7 +9810,7 @@ class UserAttributeType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.name = _cast(None, name)
         self.name_nsprefix_ = None
         self.description = _cast(None, description)
@@ -9902,7 +9961,7 @@ class TableCellRoleType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.rowIndex = _cast(int, rowIndex)
         self.rowIndex_nsprefix_ = None
         self.columnIndex = _cast(int, columnIndex)
@@ -10049,9 +10108,9 @@ class RolesType(GeneratedsSuper):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
+        self.ns_prefix_ = "pc"
         self.TableCellRole = TableCellRole
-        self.TableCellRole_nsprefix_ = None
+        self.TableCellRole_nsprefix_ = "pc"
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -10150,8 +10209,8 @@ class CustomRegionType(RegionType):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        super(CustomRegionType, self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
+        self.ns_prefix_ = "pc"
+        super(globals().get("CustomRegionType"), self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
         self.type_ = _cast(None, type_)
         self.type__nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -10180,7 +10239,7 @@ class CustomRegionType(RegionType):
             return True
         else:
             return False
-    def export(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='CustomRegionType', pretty_print=True):
+    def export(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='CustomRegionType', pretty_print=True):
         imported_ns_def_ = GenerateDSNamespaceDefs_.get('CustomRegionType')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
@@ -10208,7 +10267,7 @@ class CustomRegionType(RegionType):
         if self.type_ is not None and 'type_' not in already_processed:
             already_processed.add('type_')
             outfile.write(' type=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.type_), input_name='type')), ))
-    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='CustomRegionType', fromsubclass_=False, pretty_print=True):
+    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='CustomRegionType', fromsubclass_=False, pretty_print=True):
         super(CustomRegionType, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -10245,8 +10304,8 @@ class UnknownRegionType(RegionType):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        super(UnknownRegionType, self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
+        self.ns_prefix_ = "pc"
+        super(globals().get("UnknownRegionType"), self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -10269,7 +10328,7 @@ class UnknownRegionType(RegionType):
             return True
         else:
             return False
-    def export(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='UnknownRegionType', pretty_print=True):
+    def export(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='UnknownRegionType', pretty_print=True):
         imported_ns_def_ = GenerateDSNamespaceDefs_.get('UnknownRegionType')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
@@ -10294,7 +10353,7 @@ class UnknownRegionType(RegionType):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='UnknownRegionType'):
         super(UnknownRegionType, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='UnknownRegionType')
-    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='UnknownRegionType', fromsubclass_=False, pretty_print=True):
+    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='UnknownRegionType', fromsubclass_=False, pretty_print=True):
         super(UnknownRegionType, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -10329,8 +10388,8 @@ class NoiseRegionType(RegionType):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        super(NoiseRegionType, self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
+        self.ns_prefix_ = "pc"
+        super(globals().get("NoiseRegionType"), self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -10353,7 +10412,7 @@ class NoiseRegionType(RegionType):
             return True
         else:
             return False
-    def export(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='NoiseRegionType', pretty_print=True):
+    def export(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='NoiseRegionType', pretty_print=True):
         imported_ns_def_ = GenerateDSNamespaceDefs_.get('NoiseRegionType')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
@@ -10378,7 +10437,7 @@ class NoiseRegionType(RegionType):
             outfile.write('/>%s' % (eol_, ))
     def exportAttributes(self, outfile, level, already_processed, namespaceprefix_='', name_='NoiseRegionType'):
         super(NoiseRegionType, self).exportAttributes(outfile, level, already_processed, namespaceprefix_, name_='NoiseRegionType')
-    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='NoiseRegionType', fromsubclass_=False, pretty_print=True):
+    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='NoiseRegionType', fromsubclass_=False, pretty_print=True):
         super(NoiseRegionType, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -10419,8 +10478,8 @@ class AdvertRegionType(RegionType):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        super(AdvertRegionType, self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
+        self.ns_prefix_ = "pc"
+        super(globals().get("AdvertRegionType"), self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
         self.orientation = _cast(float, orientation)
         self.orientation_nsprefix_ = None
         self.bgColour = _cast(None, bgColour)
@@ -10468,7 +10527,7 @@ class AdvertRegionType(RegionType):
             return True
         else:
             return False
-    def export(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='AdvertRegionType', pretty_print=True):
+    def export(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='AdvertRegionType', pretty_print=True):
         imported_ns_def_ = GenerateDSNamespaceDefs_.get('AdvertRegionType')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
@@ -10499,7 +10558,7 @@ class AdvertRegionType(RegionType):
         if self.bgColour is not None and 'bgColour' not in already_processed:
             already_processed.add('bgColour')
             outfile.write(' bgColour=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.bgColour), input_name='bgColour')), ))
-    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='AdvertRegionType', fromsubclass_=False, pretty_print=True):
+    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='AdvertRegionType', fromsubclass_=False, pretty_print=True):
         super(AdvertRegionType, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -10550,8 +10609,8 @@ class MusicRegionType(RegionType):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        super(MusicRegionType, self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
+        self.ns_prefix_ = "pc"
+        super(globals().get("MusicRegionType"), self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
         self.orientation = _cast(float, orientation)
         self.orientation_nsprefix_ = None
         self.bgColour = _cast(None, bgColour)
@@ -10599,7 +10658,7 @@ class MusicRegionType(RegionType):
             return True
         else:
             return False
-    def export(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='MusicRegionType', pretty_print=True):
+    def export(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='MusicRegionType', pretty_print=True):
         imported_ns_def_ = GenerateDSNamespaceDefs_.get('MusicRegionType')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
@@ -10630,7 +10689,7 @@ class MusicRegionType(RegionType):
         if self.bgColour is not None and 'bgColour' not in already_processed:
             already_processed.add('bgColour')
             outfile.write(' bgColour=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.bgColour), input_name='bgColour')), ))
-    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='MusicRegionType', fromsubclass_=False, pretty_print=True):
+    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='MusicRegionType', fromsubclass_=False, pretty_print=True):
         super(MusicRegionType, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -10680,8 +10739,8 @@ class MapRegionType(RegionType):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        super(MapRegionType, self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
+        self.ns_prefix_ = "pc"
+        super(globals().get("MapRegionType"), self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
         self.orientation = _cast(float, orientation)
         self.orientation_nsprefix_ = None
     def factory(*args_, **kwargs_):
@@ -10710,7 +10769,7 @@ class MapRegionType(RegionType):
             return True
         else:
             return False
-    def export(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='MapRegionType', pretty_print=True):
+    def export(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='MapRegionType', pretty_print=True):
         imported_ns_def_ = GenerateDSNamespaceDefs_.get('MapRegionType')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
@@ -10738,7 +10797,7 @@ class MapRegionType(RegionType):
         if self.orientation is not None and 'orientation' not in already_processed:
             already_processed.add('orientation')
             outfile.write(' orientation="%s"' % self.gds_format_float(self.orientation, input_name='orientation'))
-    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='MapRegionType', fromsubclass_=False, pretty_print=True):
+    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='MapRegionType', fromsubclass_=False, pretty_print=True):
         super(MapRegionType, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -10785,8 +10844,8 @@ class ChemRegionType(RegionType):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        super(ChemRegionType, self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
+        self.ns_prefix_ = "pc"
+        super(globals().get("ChemRegionType"), self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
         self.orientation = _cast(float, orientation)
         self.orientation_nsprefix_ = None
         self.bgColour = _cast(None, bgColour)
@@ -10834,7 +10893,7 @@ class ChemRegionType(RegionType):
             return True
         else:
             return False
-    def export(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='ChemRegionType', pretty_print=True):
+    def export(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='ChemRegionType', pretty_print=True):
         imported_ns_def_ = GenerateDSNamespaceDefs_.get('ChemRegionType')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
@@ -10865,7 +10924,7 @@ class ChemRegionType(RegionType):
         if self.bgColour is not None and 'bgColour' not in already_processed:
             already_processed.add('bgColour')
             outfile.write(' bgColour=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.bgColour), input_name='bgColour')), ))
-    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='ChemRegionType', fromsubclass_=False, pretty_print=True):
+    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='ChemRegionType', fromsubclass_=False, pretty_print=True):
         super(ChemRegionType, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -10917,8 +10976,8 @@ class MathsRegionType(RegionType):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        super(MathsRegionType, self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
+        self.ns_prefix_ = "pc"
+        super(globals().get("MathsRegionType"), self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
         self.orientation = _cast(float, orientation)
         self.orientation_nsprefix_ = None
         self.bgColour = _cast(None, bgColour)
@@ -10966,7 +11025,7 @@ class MathsRegionType(RegionType):
             return True
         else:
             return False
-    def export(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='MathsRegionType', pretty_print=True):
+    def export(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='MathsRegionType', pretty_print=True):
         imported_ns_def_ = GenerateDSNamespaceDefs_.get('MathsRegionType')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
@@ -10997,7 +11056,7 @@ class MathsRegionType(RegionType):
         if self.bgColour is not None and 'bgColour' not in already_processed:
             already_processed.add('bgColour')
             outfile.write(' bgColour=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.bgColour), input_name='bgColour')), ))
-    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='MathsRegionType', fromsubclass_=False, pretty_print=True):
+    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='MathsRegionType', fromsubclass_=False, pretty_print=True):
         super(MathsRegionType, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -11050,8 +11109,8 @@ class SeparatorRegionType(RegionType):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        super(SeparatorRegionType, self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
+        self.ns_prefix_ = "pc"
+        super(globals().get("SeparatorRegionType"), self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
         self.orientation = _cast(float, orientation)
         self.orientation_nsprefix_ = None
         self.colour = _cast(None, colour)
@@ -11099,7 +11158,7 @@ class SeparatorRegionType(RegionType):
             return True
         else:
             return False
-    def export(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='SeparatorRegionType', pretty_print=True):
+    def export(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='SeparatorRegionType', pretty_print=True):
         imported_ns_def_ = GenerateDSNamespaceDefs_.get('SeparatorRegionType')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
@@ -11130,7 +11189,7 @@ class SeparatorRegionType(RegionType):
         if self.colour is not None and 'colour' not in already_processed:
             already_processed.add('colour')
             outfile.write(' colour=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.colour), input_name='colour')), ))
-    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='SeparatorRegionType', fromsubclass_=False, pretty_print=True):
+    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='SeparatorRegionType', fromsubclass_=False, pretty_print=True):
         super(SeparatorRegionType, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -11190,8 +11249,8 @@ class ChartRegionType(RegionType):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        super(ChartRegionType, self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
+        self.ns_prefix_ = "pc"
+        super(globals().get("ChartRegionType"), self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
         self.orientation = _cast(float, orientation)
         self.orientation_nsprefix_ = None
         self.type_ = _cast(None, type_)
@@ -11270,7 +11329,7 @@ class ChartRegionType(RegionType):
             return True
         else:
             return False
-    def export(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='ChartRegionType', pretty_print=True):
+    def export(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='ChartRegionType', pretty_print=True):
         imported_ns_def_ = GenerateDSNamespaceDefs_.get('ChartRegionType')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
@@ -11310,7 +11369,7 @@ class ChartRegionType(RegionType):
         if self.embText is not None and 'embText' not in already_processed:
             already_processed.add('embText')
             outfile.write(' embText="%s"' % self.gds_format_boolean(self.embText, input_name='embText'))
-    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='ChartRegionType', fromsubclass_=False, pretty_print=True):
+    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='ChartRegionType', fromsubclass_=False, pretty_print=True):
         super(ChartRegionType, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -11393,8 +11452,8 @@ class TableRegionType(RegionType):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        super(TableRegionType, self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
+        self.ns_prefix_ = "pc"
+        super(globals().get("TableRegionType"), self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
         self.orientation = _cast(float, orientation)
         self.orientation_nsprefix_ = None
         self.rows = _cast(int, rows)
@@ -11410,7 +11469,7 @@ class TableRegionType(RegionType):
         self.embText = _cast(bool, embText)
         self.embText_nsprefix_ = None
         self.Grid = Grid
-        self.Grid_nsprefix_ = None
+        self.Grid_nsprefix_ = "pc"
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -11479,7 +11538,7 @@ class TableRegionType(RegionType):
             return True
         else:
             return False
-    def export(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='TableRegionType', pretty_print=True):
+    def export(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='TableRegionType', pretty_print=True):
         imported_ns_def_ = GenerateDSNamespaceDefs_.get('TableRegionType')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
@@ -11525,7 +11584,7 @@ class TableRegionType(RegionType):
         if self.embText is not None and 'embText' not in already_processed:
             already_processed.add('embText')
             outfile.write(' embText="%s"' % self.gds_format_boolean(self.embText, input_name='embText'))
-    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='TableRegionType', fromsubclass_=False, pretty_print=True):
+    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='TableRegionType', fromsubclass_=False, pretty_print=True):
         super(TableRegionType, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
         if pretty_print:
             eol_ = '\n'
@@ -11625,8 +11684,8 @@ class GraphicRegionType(RegionType):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        super(GraphicRegionType, self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
+        self.ns_prefix_ = "pc"
+        super(globals().get("GraphicRegionType"), self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
         self.orientation = _cast(float, orientation)
         self.orientation_nsprefix_ = None
         self.type_ = _cast(None, type_)
@@ -11686,7 +11745,7 @@ class GraphicRegionType(RegionType):
             return True
         else:
             return False
-    def export(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='GraphicRegionType', pretty_print=True):
+    def export(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='GraphicRegionType', pretty_print=True):
         imported_ns_def_ = GenerateDSNamespaceDefs_.get('GraphicRegionType')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
@@ -11723,7 +11782,7 @@ class GraphicRegionType(RegionType):
         if self.embText is not None and 'embText' not in already_processed:
             already_processed.add('embText')
             outfile.write(' embText="%s"' % self.gds_format_boolean(self.embText, input_name='embText'))
-    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='GraphicRegionType', fromsubclass_=False, pretty_print=True):
+    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='GraphicRegionType', fromsubclass_=False, pretty_print=True):
         super(GraphicRegionType, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -11793,8 +11852,8 @@ class LineDrawingRegionType(RegionType):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        super(LineDrawingRegionType, self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
+        self.ns_prefix_ = "pc"
+        super(globals().get("LineDrawingRegionType"), self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
         self.orientation = _cast(float, orientation)
         self.orientation_nsprefix_ = None
         self.penColour = _cast(None, penColour)
@@ -11854,7 +11913,7 @@ class LineDrawingRegionType(RegionType):
             return True
         else:
             return False
-    def export(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='LineDrawingRegionType', pretty_print=True):
+    def export(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='LineDrawingRegionType', pretty_print=True):
         imported_ns_def_ = GenerateDSNamespaceDefs_.get('LineDrawingRegionType')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
@@ -11891,7 +11950,7 @@ class LineDrawingRegionType(RegionType):
         if self.embText is not None and 'embText' not in already_processed:
             already_processed.add('embText')
             outfile.write(' embText="%s"' % self.gds_format_boolean(self.embText, input_name='embText'))
-    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='LineDrawingRegionType', fromsubclass_=False, pretty_print=True):
+    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='LineDrawingRegionType', fromsubclass_=False, pretty_print=True):
         super(LineDrawingRegionType, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -11962,8 +12021,8 @@ class ImageRegionType(RegionType):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        super(ImageRegionType, self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
+        self.ns_prefix_ = "pc"
+        super(globals().get("ImageRegionType"), self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
         self.orientation = _cast(float, orientation)
         self.orientation_nsprefix_ = None
         self.colourDepth = _cast(None, colourDepth)
@@ -12036,7 +12095,7 @@ class ImageRegionType(RegionType):
             return True
         else:
             return False
-    def export(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='ImageRegionType', pretty_print=True):
+    def export(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='ImageRegionType', pretty_print=True):
         imported_ns_def_ = GenerateDSNamespaceDefs_.get('ImageRegionType')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
@@ -12073,7 +12132,7 @@ class ImageRegionType(RegionType):
         if self.embText is not None and 'embText' not in already_processed:
             already_processed.add('embText')
             outfile.write(' embText="%s"' % self.gds_format_boolean(self.embText, input_name='embText'))
-    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='ImageRegionType', fromsubclass_=False, pretty_print=True):
+    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='ImageRegionType', fromsubclass_=False, pretty_print=True):
         super(ImageRegionType, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
     def build(self, node, gds_collector_=None):
         self.gds_collector_ = gds_collector_
@@ -12176,8 +12235,8 @@ class TextRegionType(RegionType):
         self.gds_elementtree_node_ = None
         self.original_tagname_ = None
         self.parent_object_ = kwargs_.get('parent_object_')
-        self.ns_prefix_ = None
-        super(TextRegionType, self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
+        self.ns_prefix_ = "pc"
+        super(globals().get("TextRegionType"), self).__init__(id, custom, comments, continuation, AlternativeImage, Coords, UserDefined, Labels, Roles, TextRegion, ImageRegion, LineDrawingRegion, GraphicRegion, TableRegion, ChartRegion, SeparatorRegion, MathsRegion, ChemRegion, MusicRegion, AdvertRegion, NoiseRegion, UnknownRegion, CustomRegion,  **kwargs_)
         self.orientation = _cast(float, orientation)
         self.orientation_nsprefix_ = None
         self.type_ = _cast(None, type_)
@@ -12208,14 +12267,14 @@ class TextRegionType(RegionType):
             self.TextLine = []
         else:
             self.TextLine = TextLine
-        self.TextLine_nsprefix_ = None
+        self.TextLine_nsprefix_ = "pc"
         if TextEquiv is None:
             self.TextEquiv = []
         else:
             self.TextEquiv = TextEquiv
-        self.TextEquiv_nsprefix_ = None
+        self.TextEquiv_nsprefix_ = "pc"
         self.TextStyle = TextStyle
-        self.TextStyle_nsprefix_ = None
+        self.TextStyle_nsprefix_ = "pc"
     def factory(*args_, **kwargs_):
         if CurrentSubclassModule_ is not None:
             subclass = getSubclassFromModule_(
@@ -12408,7 +12467,7 @@ class TextRegionType(RegionType):
             return True
         else:
             return False
-    def export(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='TextRegionType', pretty_print=True):
+    def export(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='TextRegionType', pretty_print=True):
         imported_ns_def_ = GenerateDSNamespaceDefs_.get('TextRegionType')
         if imported_ns_def_ is not None:
             namespacedef_ = imported_ns_def_
@@ -12472,7 +12531,7 @@ class TextRegionType(RegionType):
         if self.production is not None and 'production' not in already_processed:
             already_processed.add('production')
             outfile.write(' production=%s' % (self.gds_encode(self.gds_format_string(quote_attrib(self.production), input_name='production')), ))
-    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='', name_='TextRegionType', fromsubclass_=False, pretty_print=True):
+    def exportChildren(self, outfile, level, namespaceprefix_='', namespacedef_='xmlns:pc="http://schema.primaresearch.org/PAGE/gts/pagecontent/2019-07-15"', name_='TextRegionType', fromsubclass_=False, pretty_print=True):
         super(TextRegionType, self).exportChildren(outfile, level, namespaceprefix_, namespacedef_, name_, True, pretty_print=pretty_print)
         if pretty_print:
             eol_ = '\n'
