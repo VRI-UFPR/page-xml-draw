@@ -2,7 +2,7 @@ import os
 import argparse
 
 from pathlib import Path
-from json import loads
+from json import load
 
 from page_xml_draw.struct.json import JsonSchema, JsonInstance
 
@@ -141,11 +141,11 @@ def get_opts():
     )
 
     parser.add_argument(
-        "-p", "--profile",
+        "-s", "--styles",
         type=Path,
-        dest="profile",
+        dest="styles",
         metavar=("<path/to/file>.json"),
-        help="path to pre-defined json profile describing what has to be done"
+        help="path to pre-defined json file describing the styles"
     )
 
     parser.add_argument(
@@ -393,15 +393,15 @@ def get_opts():
     else:
         output_format = "image/png"
 
-    if options.profile:
-        with open(str(options.profile), 'r') as fp:
-            instance = loads(fp.read())
+    if options.styles:
+        with options.styles.open() as fp:
+          styles = load(fp)
     else:
-        instance = options.instance
+        styles = options.instance
 
-    instance = JsonInstance(instance)
+    styles = JsonInstance(styles)
 
     # Validate json instance against schema:
-    schema.validate(instance)
+    schema.validate(styles)
 
-    return input_abs, output_abs, base_dir_abs, output_format, instance
+    return input_abs, output_abs, base_dir_abs, output_format, styles
